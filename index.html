@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Eksamen</title>
+<title>Eksamen Øving</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -134,14 +134,7 @@ body {
 .gE { background: var(--red-l); color: #c2410c; }
 .gF { background: #fef2f2; color: var(--red); }
 
-.pom-box { background: var(--bg); border: 1px solid var(--border); border-radius: var(--r); padding: 11px 13px; margin: 0 12px; }
-.pom-lbl { font-size: 11px; color: var(--muted); margin-bottom: 5px; }
-.pom-disp { font-family: 'IBM Plex Mono', monospace; font-size: 22px; font-weight: 500; text-align: center; margin-bottom: 8px; letter-spacing: .05em; }
-.pom-disp.brk { color: var(--green); }
-.pom-row { display: flex; gap: 6px; }
-.pom-btn { flex: 1; padding: 6px; border-radius: 4px; border: 1px solid var(--border); background: var(--white); cursor: pointer; font-family: inherit; font-size: 12px; color: var(--muted); transition: all .12s; min-height: 34px; }
-.pom-btn:hover { border-color: var(--accent); color: var(--accent); }
-.pom-btn.on { background: var(--accent); color: #fff; border-color: var(--accent); }
+
 
 /* main area */
 .main { flex: 1; padding: 24px 32px; min-width: 0; }
@@ -290,7 +283,7 @@ body {
   .q-dot.ok { background: var(--green-l); border-color: var(--green); color: var(--green); }
   .q-dot.bad { background: var(--red-l); border-color: var(--red); color: var(--red); }
 
-  .mode-bar { margin-bottom: 14px; }
+  .mode-bar { display: none; }
   .mdbtn { padding: 7px 12px; font-size: 12.5px; }
 
   /* flashcard larger */
@@ -300,14 +293,11 @@ body {
   .rate-row { gap: 6px; }
   .rbtn { padding: 12px 6px; font-size: 12.5px; }
 
-  /* pomodoro hidden on mobile main, only in sidebar (hidden) – show inline */
-  .mob-pom { display: block; }
 }
 
 @media (min-width: 769px) {
   .mob-nav { display: none; }
   .q-strip { display: none; }
-  .mob-pom { display: none; }
 }
 
 .hidden { display: none !important; }
@@ -361,7 +351,6 @@ body {
     <h4>🧠 Studietips for deg</h4>
     <p><strong>Aktiv gjenhenting</strong> gir 50% bedre hukommelse enn passiv lesing. Skriv alltid svaret FØR du ser fasiten.</p>
     <p><strong>Spaced repetition:</strong> Studér litt hver dag. Bruk studiekortmodus mellom øktene.</p>
-    <p><strong>Pomodoro:</strong> 25 min fokus → 5 min pause. Spesielt effektivt ved ADHD/dysleksi.</p>
   </div>
 </div>
 
@@ -387,35 +376,11 @@ body {
         <div class="score-row"><span>Karakter</span><span class="gbadge" id="gradeEl">–</span></div>
       </div>
     </div>
-    <hr class="sb-div">
-    <div class="sb-sec">
-      <span class="sb-lbl">POMODORO ⏲</span>
-      <div class="pom-box">
-        <div class="pom-lbl" id="pomLbl">Fokustid (25 min)</div>
-        <div class="pom-disp" id="pomDisp">25:00</div>
-        <div class="pom-row">
-          <button class="pom-btn" id="pomBtn" onclick="pomToggle()">▶ Start</button>
-          <button class="pom-btn" onclick="pomReset()">↩ Reset</button>
-        </div>
-      </div>
-    </div>
   </nav>
 
   <!-- MAIN -->
   <main class="main">
-    <!-- Mobile pomodoro -->
-    <div class="mob-pom" style="margin-bottom:14px;display:none" id="mobPomWrap">
-      <div class="pom-box" style="margin:0">
-        <div class="pom-lbl" id="pomLblM">Fokustid (25 min)</div>
-        <div class="pom-disp" id="pomDispM">25:00</div>
-        <div class="pom-row">
-          <button class="pom-btn" id="pomBtnM" onclick="pomToggle()">▶ Start</button>
-          <button class="pom-btn" onclick="pomReset()">↩ Reset</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Mode bar -->
+    <!-- Desktop mode bar (hidden on mobile via CSS) -->
     <div class="mode-bar">
       <button class="mdbtn active" id="mEB" onclick="setMode('exam')">📝 Eksamen</button>
       <button class="mdbtn" id="mSB" onclick="setMode('study')">🃏 Studiekort</button>
@@ -602,7 +567,7 @@ function renderSidebar() {
 function switchExam(i) {
   cExam = i; cSec = 0; cQ = 0;
   document.querySelectorAll('.etab').forEach((t,j) => t.classList.toggle('active', j===i));
-  document.querySelectorAll('.mob-nav-btn').forEach((t,j) => { if(j<EXAMS.length) t.classList.toggle('active', j===i); });
+  document.querySelectorAll('.mob-nav-btn:not(#mtStudy)').forEach((t,j) => t.classList.toggle('active', j===i));
   renderAll();
 }
 
@@ -812,15 +777,29 @@ function updateProg() {
 // ══════════════════════════════════════════════════════
 //  MODE
 // ══════════════════════════════════════════════════════
+function buildMobToggle() {
+  const isStudy = mode === 'study';
+  const examName = EXAMS[cExam] ? EXAMS[cExam].name : '';
+  const icon = isStudy ? '📝' : '🃏';
+  const label = isStudy ? 'Eksamen' : 'Studiekort';
+  return `<button class="mob-nav-btn mob-toggle${isStudy?' active':''}" id="mtStudy" onclick="setMode(mode==='study'?'exam':'study')">
+    <span class="mn-icon">${icon}</span><span>${label}</span>
+  </button>`;
+}
+
 function setMode(m) {
   mode = m;
   document.getElementById('examMode').classList.toggle('hidden', m!=='exam');
   document.getElementById('studyMode').classList.toggle('hidden', m!=='study');
   document.getElementById('mEB').classList.toggle('active', m==='exam');
   document.getElementById('mSB').classList.toggle('active', m==='study');
-  // update mobile study tab
+  // update mobile toggle button icon/text
   const mts = document.getElementById('mtStudy');
-  if (mts) mts.classList.toggle('active', m==='study');
+  if (mts) {
+    const isStudy = m === 'study';
+    mts.innerHTML = `<span class="mn-icon">${isStudy ? '📝' : '🃏'}</span><span>${isStudy ? 'Eksamen' : 'Studiekort'}</span>`;
+    mts.classList.toggle('active', isStudy);
+  }
   if (m==='study') { fcIdx=0; loadFC(0); }
 }
 
@@ -879,32 +858,7 @@ setInterval(()=>{
   document.getElementById('timerEl').textContent=String(Math.floor(sessec/60)).padStart(2,'0')+':'+String(sessec%60).padStart(2,'0');
 },1000);
 
-// ══════════════════════════════════════════════════════
-//  POMODORO
-// ══════════════════════════════════════════════════════
-let pomSec=25*60, pomRun=false, pomBreak=false, pomInt=null;
-function pomRender() {
-  const t=String(Math.floor(pomSec/60)).padStart(2,'0')+':'+String(pomSec%60).padStart(2,'0');
-  const lbl=pomBreak?'Pausetid (5 min) ☕':'Fokustid (25 min)';
-  ['pomDisp','pomDispM'].forEach(id=>{const el=document.getElementById(id);if(el){el.textContent=t;el.className='pom-disp'+(pomBreak?' brk':'');}});
-  ['pomLbl','pomLblM'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=lbl;});
-}
-function pomToggle() {
-  if(pomRun){clearInterval(pomInt);pomRun=false;['pomBtn','pomBtnM'].forEach(id=>{const el=document.getElementById(id);if(el){el.textContent='▶ Start';el.classList.remove('on');}});}
-  else{pomRun=true;['pomBtn','pomBtnM'].forEach(id=>{const el=document.getElementById(id);if(el){el.textContent='⏸ Pause';el.classList.add('on');}});
-    pomInt=setInterval(()=>{pomSec--;pomRender();if(pomSec<=0){clearInterval(pomInt);pomRun=false;pomBreak=!pomBreak;pomSec=pomBreak?5*60:25*60;['pomBtn','pomBtnM'].forEach(id=>{const el=document.getElementById(id);if(el){el.textContent='▶ Start';el.classList.remove('on');}});pomRender();alert(pomBreak?'🎉 25 min ferdig! Ta 5 min pause.':'⏰ Pause ferdig! Klar for ny økt?');}},1000);}
-}
-function pomReset(){clearInterval(pomInt);pomRun=false;pomBreak=false;pomSec=25*60;['pomBtn','pomBtnM'].forEach(id=>{const el=document.getElementById(id);if(el){el.textContent='▶ Start';el.classList.remove('on');}});pomRender();}
 
-// ══════════════════════════════════════════════════════
-//  RESPONSIVE: show mobile pom on small screens
-// ══════════════════════════════════════════════════════
-function checkMobile() {
-  const mp = document.getElementById('mobPomWrap');
-  if (mp) mp.style.display = window.innerWidth <= 768 ? 'block' : 'none';
-}
-window.addEventListener('resize', checkMobile);
-checkMobile();
 
 // ══════════════════════════════════════════════════════
 //  BOOT
