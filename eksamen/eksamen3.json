@@ -1,0 +1,219 @@
+{
+  "name": "Øvelse 3",
+  "sections": [
+    {
+      "title": "Sann / Usann",
+      "info": "Svar med Sann eller Usann og gi en kort begrunnelse.",
+      "type": "truefalse",
+      "pointsEach": 2,
+      "questions": [
+        {
+          "text": "En ikke-tett indeks har normalt færre indeksoppføringer enn en tett indeks.",
+          "correct": true,
+          "explanation": "SANN. En ikke-tett (sparse) indeks har én oppføring per blokk i datafilen, mens en tett indeks har én oppføring per rad. Siden det er færre blokker enn rader, har ikke-tett indeks færre oppføringer."
+        },
+        {
+          "text": "En B+-treindeks gir nødvendigvis ulikt antall diskaksesser for ulike søkeverdier.",
+          "correct": false,
+          "explanation": "USANN. B+-tre er høyde-balansert – alle bladnoder er på samme nivå. Dermed krever ethvert punktsøk samme antall diskaksesser (lik trehodybde), uavhengig av søkeverdien."
+        },
+        {
+          "text": "En transaksjon kan bestå av både INSERT, UPDATE og DELETE.",
+          "correct": true,
+          "explanation": "SANN. En transaksjon er en logisk enhet som kan inneholde én eller flere SQL-setninger av ulike typer, inkludert INSERT, UPDATE og DELETE."
+        },
+        {
+          "text": "ROLLBACK kan brukes til å angre en transaksjon som ennå ikke er committet.",
+          "correct": true,
+          "explanation": "SANN. ROLLBACK angrer alle endringer gjort siden siste BEGIN/START TRANSACTION, forutsatt at transaksjonen ikke er committet."
+        },
+        {
+          "text": "Dirty read oppstår når en transaksjon leser data som senere blir rullet tilbake av en annen transaksjon.",
+          "correct": true,
+          "explanation": "SANN. Dirty read er et isolasjonsproblem der transaksjon T1 leser ucommittede data fra T2, som siden gjør ROLLBACK – T1 har da lest data som aldri ble permanente."
+        },
+        {
+          "text": "Dersom alle transaksjoner følger tofaselåsing, blir alle forløp serialiserbare.",
+          "correct": true,
+          "explanation": "SANN. Tofaselåsing (2PL) garanterer serialiserbarhet: dersom alle transaksjoner følger protokollen (veksende fase etterfulgt av avtagende fase), vil ethvert forløp være serialiserbart."
+        },
+        {
+          "text": "En BEFORE UPDATE rad-trigger i PostgreSQL kan endre NEW-verdier før raden lagres.",
+          "correct": true,
+          "explanation": "SANN. En BEFORE-trigger kjøres før raden skrives til databasen. Triggerfunksjonen kan modifisere NEW-felter som deretter lagres."
+        },
+        {
+          "text": "En AFTER-trigger egner seg godt til automatisk formatering av data før lagring.",
+          "correct": false,
+          "explanation": "USANN. AFTER-trigger kjøres etter at data allerede er lagret – det er for sent å endre dataene som ble skrevet. Formatering før lagring gjøres med BEFORE-trigger."
+        },
+        {
+          "text": "En lagret funksjon i PostgreSQL kalles typisk med SELECT, mens en prosedyre kalles med CALL.",
+          "correct": true,
+          "explanation": "SANN. Dette er korrekt iht. PostgreSQL-dokumentasjonen: funksjoner kalles med SELECT funksjonsnavn(...), prosedyrer med CALL prosedyrenavn(...)."
+        },
+        {
+          "text": "En IN-parameter i en prosedyre er ment for å sende verdier inn, ikke for å returnere verdier ut.",
+          "correct": true,
+          "explanation": "SANN. IN-parametre er kun for inndata. For å returnere verdier brukes OUT- eller INOUT-parametre."
+        },
+        {
+          "text": "WITH GRANT OPTION brukes ved tildeling av objektrettigheter.",
+          "correct": true,
+          "explanation": "SANN. WITH GRANT OPTION er en klausul i GRANT-kommandoen for objektrettigheter som gir mottakeren rett til å videredelegere rettigheten."
+        },
+        {
+          "text": "Hvis en rettighet er gitt både direkte og via en rolle, vil REVOKE av den direkte tildelingen alltid fjerne rettigheten fullstendig.",
+          "correct": false,
+          "explanation": "USANN. Brukeren har summen av alle rettigheter tildelt direkte og via roller. Dersom rettigheten også finnes via en rolle, beholder brukeren den etter at den direkte tildelingen er fjernet."
+        },
+        {
+          "text": "Systemkatalogen inneholder metadata om blant annet tabeller, kolonner, triggere og privilegier.",
+          "correct": true,
+          "explanation": "SANN. Systemkatalogen (pg_catalog i PostgreSQL, med tabeller som pg_class, pg_attribute, pg_trigger, pg_privilege) lagrer metadata om alle databaseobjekter."
+        },
+        {
+          "text": "JSON egner seg kun til helt flate datastrukturer uten nesting.",
+          "correct": false,
+          "explanation": "USANN. JSON støtter nesting av objekter og arrays til vilkårlig dybde og er spesielt egnet for hierarkiske og semistrukturerte data."
+        },
+        {
+          "text": "Dokumentdatabaser er ofte godt egnet når dataene er semistrukturerte og naturlig kan representeres som dokumenter.",
+          "correct": true,
+          "explanation": "SANN. Dokumentdatabaser (f.eks. MongoDB) er designet for semistrukturerte data som varierer i struktur, og som naturlig grupperes som selvstendige dokumenter."
+        }
+      ]
+    },
+    {
+      "title": "Flervalg",
+      "info": "Kun ett riktig svar.",
+      "type": "multiple",
+      "pointsEach": 2,
+      "questions": [
+        {
+          "text": "Hva er hovedpoenget med en indeks?",
+          "options": ["Å redusere antall kolonner i en tabell", "Å effektivisere søk og eventuelt sortering", "Å erstatte primærnøkler", "Å sikre at alle data blir kryptert"],
+          "correct": 1,
+          "explanation": "En indeks gir rask tilgang til rader basert på søkeverdier, og kan også brukes til effektiv sortering."
+        },
+        {
+          "text": "Gitt tabellen Ansatt(ansnr, navn, lønn). Hva gjør denne kommandoen?\n\nCREATE INDEX idx_lonn ON Ansatt(lønn);",
+          "options": ["Lager en ny tabell kalt idx_lonn", "Lager en indeks på kolonnen lønn", "Sorterer tabellen fysisk etter lønn", "Tvinger alle lønninger til å være unike"],
+          "correct": 1,
+          "explanation": "Kommandoen lager en indeks kalt idx_lonn på kolonnen lønn i tabellen Ansatt. Tabellen sorteres ikke fysisk, og unike verdier påtvinges ikke."
+        },
+        {
+          "text": "Hva er et typisk eksempel på samtidighetsproblem?",
+          "options": ["Full backup", "Lost update", "Primærnøkkel", "Foreign key"],
+          "correct": 1,
+          "explanation": "Lost update er et klassisk samtidighetsproblem der to transaksjoner overskriver hverandres endringer."
+        },
+        {
+          "text": "Hva er riktig om SELECT INTO i PL/pgSQL?",
+          "options": ["Det brukes bare til å opprette nye tabeller", "Det brukes til å kopiere kolonneverdier inn i lokale variabler", "Det kan bare brukes sammen med DELETE", "Det brukes bare uten WHERE-betingelse"],
+          "correct": 1,
+          "explanation": "SELECT INTO i PL/pgSQL henter én rad og lagrer kolonneverdiene i lokale variabler i funksjons-/prosedyre-blokken."
+        },
+        {
+          "text": "Hva kjennetegner en rad-trigger?",
+          "options": ["Den kjøres en gang per tabell", "Den kjøres en gang per SQL-setning", "Den kjøres for hver rad som berøres", "Den kan ikke bruke OLD og NEW"],
+          "correct": 2,
+          "explanation": "En rad-trigger (FOR EACH ROW) kjøres én gang per berørt rad, og har tilgang til OLD (gammel verdi) og NEW (ny verdi)."
+        },
+        {
+          "text": "Hva er riktig om OLD og NEW?",
+          "options": ["Ved INSERT er NEW alltid NULL", "Ved DELETE er OLD alltid NULL", "Ved UPDATE kan både OLD og NEW brukes i rad-triggere", "De kan bare brukes i lagrede funksjoner som ikke er triggere"],
+          "correct": 2,
+          "explanation": "Ved UPDATE er OLD den eksisterende raden og NEW den nye verdien. Begge er tilgjengelige i rad-triggere. Ved INSERT er OLD NULL, ved DELETE er NEW NULL."
+        },
+        {
+          "text": "Hva gjør denne kommandoen?\n\nGRANT SELECT, UPDATE ON Kunder TO Per;",
+          "options": ["Oppretter brukeren Per", "Gir Per rett til å lese og oppdatere tabellen Kunder", "Fjerner alle rettigheter fra Per", "Gir Per systemadministratorrettigheter"],
+          "correct": 1,
+          "explanation": "Kommandoen gir Per SELECT- og UPDATE-rettigheter på tabellen Kunder. Per kan lese og oppdatere rader."
+        },
+        {
+          "text": "Hva er riktig om roller i PostgreSQL?",
+          "options": ["Roller kan ikke eie databaseobjekter", "Roller kan brukes både som brukerroller og grupperoller", "Roller kan ikke arve rettigheter", "Roller brukes kun i operativsystemet, ikke i databasen"],
+          "correct": 1,
+          "explanation": "I PostgreSQL er roller en samlet mekanisme – en rolle med LOGIN-attributt brukes som bruker, uten LOGIN brukes den som gruppe. Roller kan eie objekter og arve rettigheter."
+        },
+        {
+          "text": "Hva passer best som bruk av en AFTER UPDATE-trigger?",
+          "options": ["Konvertere et navn til store bokstaver før raden lagres", "Sette standardverdi på et felt før lagring", "Loggføre endring av lønn til en egen loggtabell", "Endre NEW.lønn før databasen oppdateres"],
+          "correct": 2,
+          "explanation": "AFTER UPDATE kjøres etter lagring og kan ikke endre data. Den passer perfekt til logging av endringer til separate loggtabeller."
+        },
+        {
+          "text": "Hvilket utsagn om JSON er riktig?",
+          "options": ["JSON kan ikke inneholde arrays", "JSON kan ikke representere objekter", "JSON egner seg godt som utvekslingsformat mellom systemer", "JSON kan bare brukes utenfor databaser"],
+          "correct": 2,
+          "explanation": "JSON er tekstbasert og lettvekt, og er et av de mest utbredte formatene for datautveksling mellom systemer og API-er."
+        },
+        {
+          "text": "Når er en dokumentdatabase ofte et godt valg?",
+          "options": ["Når alle data naturlig passer i strengt normaliserte tabeller og nesten aldri endres i struktur", "Når data er semistrukturerte og naturlig organiseres som dokumenter", "Når man kun trenger enkle heltall", "Når man vil unngå nøkler fullstendig"],
+          "correct": 1,
+          "explanation": "Dokumentdatabaser er spesielt egnet for data med varierende struktur som naturlig kan representeres som selvstendige dokumenter (f.eks. JSON)."
+        },
+        {
+          "text": "Hvilket setning om blokker er riktig?",
+          "options": ["En blokk inneholder alltid nøyaktig en rad", "En blokk er vanligvis større enn en byte og kan inneholde mange rader", "En blokk brukes bare i indekser", "En blokk finnes bare i hovedminnet"],
+          "correct": 1,
+          "explanation": "En blokk/side (standard 8192 byte i PostgreSQL) er den minste enheten for diskoverføring og inneholder typisk mange rader."
+        },
+        {
+          "text": "Hva betyr Atomicity?",
+          "options": ["At to transaksjoner alltid kan skrive samtidig", "At alle eller ingen deloperasjoner i en transaksjon fullføres", "At alle tabeller må ha atomiske verdier", "At databasen alltid er distribuert"],
+          "correct": 1,
+          "explanation": "Atomicity er A-en i ACID: alle operasjoner i en transaksjon utføres eller ingen av dem – ingen delvis gjennomføring er tillatt."
+        },
+        {
+          "text": "Hva er mest korrekt om transaksjonsloggen?",
+          "options": ["Den brukes bare til å lagre brukernavn", "Den kan brukes ved recovery etter feil", "Den erstatter behovet for backup", "Den brukes bare til SELECT-spørringer"],
+          "correct": 1,
+          "explanation": "Transaksjonsloggen (WAL – Write-Ahead Log) registrerer alle endringer og brukes til å gjenopprette databasen til en konsistent tilstand etter krasj."
+        },
+        {
+          "text": "Hvilket av følgende passer best for en AFTER INSERT-trigger?",
+          "options": ["Hindre ugyldig verdi før lagring", "Endre NEW før raden settes inn", "Oppdatere en annen tabell som følge av at en rad ble satt inn", "Opprette indekser automatisk"],
+          "correct": 2,
+          "explanation": "AFTER INSERT kjøres etter at raden er satt inn. Den kan ikke hindre innsetting eller endre NEW. Den passer til å oppdatere andre tabeller som reaksjon på innsettingen."
+        }
+      ]
+    },
+    {
+      "title": "Forklar kort",
+      "info": "6 poeng per oppgave.",
+      "type": "essay",
+      "pointsEach": 6,
+      "questions": [
+        {
+          "title": "Oppgave 1 (6 poeng)",
+          "text": "Forklar hva en lost update er. Bruk gjerne et lite eksempel med to transaksjoner som begge leser samme verdi, beregner ny verdi og skriver tilbake. Forklar også hvorfor problemet oppstår, og hvordan låser kan hindre det.",
+          "model": "Lost update oppstår når to transaksjoner leser samme verdi, beregner ny verdi basert på den, og skriver tilbake – og den ene overskriver den andres endring.\n\nEksempel:\nT1 leser saldo = 1000, beregner 1000 + 500 = 1500\nT2 leser saldo = 1000, beregner 1000 + 200 = 1200\nT1 skriver 1500. T2 skriver 1200.\nResultat: 1200 – T1s økning på 500 er tapt.\n\nHvorfor: Ingen av transaksjonene låste raden, så begge leste den opprinnelige verdien.\n\nLøsning: Eksklusiv lås (X-lock) på raden ved lesing for oppdatering. T2 må da vente til T1 er ferdig og commit."
+        },
+        {
+          "title": "Oppgave 2 (6 poeng)",
+          "text": "Studer koden:\n\nDECLARE\n   v_pris NUMERIC(8,2);\nBEGIN\n   SELECT pris_pr_enhet\n   INTO v_pris\n   FROM vare\n   WHERE vnr = '10830';\nEND;\n\nForklar:\n– hva SELECT INTO gjør her\n– hvorfor denne bruken er fornuftig når vnr er primærnøkkel\n– hva slags verdi v_pris vil få dersom raden finnes",
+          "model": "SELECT INTO: Kjører en spørring og lagrer resultatet (kolonneverdien pris_pr_enhet) i den lokale variabelen v_pris.\n\nHvorfor fornuftig med primærnøkkel: vnr er primærnøkkel, som garanterer unike verdier. Det vil alltid returneres nøyaktig null eller én rad – aldri TOO_MANY_ROWS-feil. SELECT INTO er trygt å bruke.\n\nVerdi i v_pris: Dersom raden finnes, får v_pris verdien av pris_pr_enhet for den aktuelle varen (en NUMERIC(8,2)-verdi, f.eks. 49.90)."
+        },
+        {
+          "title": "Oppgave 3 (6 poeng)",
+          "text": "Studer følgende triggerfunksjon:\n\nCREATE OR REPLACE FUNCTION ansatt_a_upd_trg_fn()\nRETURNS trigger\nLANGUAGE plpgsql AS $$\nBEGIN\n   INSERT INTO ansattlogg(ansnr, dato, gammellonn, nylonn)\n   VALUES (\n      NEW.ansnr,\n      CURRENT_DATE,\n      OLD.lonn,\n      NEW.lonn\n   );\n   RETURN NEW;\nEND;\n$$;\n\nog triggeren:\n\nCREATE TRIGGER ansatt_a_upd_trg\nAFTER UPDATE ON ansatt\nFOR EACH ROW\nEXECUTE FUNCTION ansatt_a_upd_trg_fn();\n\nForklar hva som skjer dersom en SQL-setning oppdaterer lønnen til tre ansatte samtidig. Hvor mange ganger fyres triggeren, og hva blir lagt inn i loggtabellen?",
+          "model": "Triggeren er FOR EACH ROW (rad-trigger). Når én UPDATE-setning berører tre rader, fyres triggeren tre ganger – én gang per rad.\n\nFor hver av de tre ansatte settes det inn én rad i ansattlogg med:\n– ansnr: ansattnummeret til den aktuelle raden\n– dato: dagens dato\n– gammellonn: OLD.lonn (lønnen før oppdatering)\n– nylonn: NEW.lonn (lønnen etter oppdatering)\n\nResultat: Tre nye rader i ansattlogg, én per oppdatert ansatt."
+        },
+        {
+          "title": "Oppgave 4 (6 poeng)",
+          "text": "Studer koden:\n\nDECLARE\n   v_pris NUMERIC(8,2);\nBEGIN\n   SELECT pris_pr_enhet\n   INTO v_pris\n   FROM vare\n   WHERE vnr = '10830';\nEND;\n\nForklar:\n– hva SELECT INTO gjør her\n– hvorfor denne bruken er fornuftig når vnr er primærnøkkel\n– hva slags verdi v_pris vil få dersom raden finnes",
+          "model": "SELECT INTO: Kjører en spørring og lagrer resultatet (kolonneverdien pris_pr_enhet) i den lokale variabelen v_pris.\n\nHvorfor fornuftig med primærnøkkel: vnr er primærnøkkel, som garanterer unike verdier. Det vil alltid returneres nøyaktig null eller én rad – aldri TOO_MANY_ROWS-feil. SELECT INTO er trygt å bruke.\n\nVerdi i v_pris: Dersom raden finnes, får v_pris verdien av pris_pr_enhet for den aktuelle varen (en NUMERIC(8,2)-verdi, f.eks. 49.90)."
+        },
+        {
+          "title": "Oppgave 5 (6 poeng)",
+          "text": "Anta følgende scenario:\n– Rollen Innsyn har SELECT på tabellen Kunde\n– Rollen Selger har rollen Innsyn\n– Brukeren Anne har rollen Selger\n\nForklar:\n– hvordan Anne får SELECT på Kunde\n– hvorfor roller i flere lag kan være nyttige\n– hva som er administrativ gevinst sammenlignet med å gi Anne rettigheten direkte",
+          "model": "Hvordan Anne får SELECT:\nAnne har rollen Selger → Selger har rollen Innsyn → Innsyn har SELECT på Kunde.\nGjennom rollearv (INHERIT) får Anne SELECT på Kunde via kjeden Anne → Selger → Innsyn.\n\nHvorfor lag er nyttige:\nDet muliggjør hierarkisk rettighetsstyring. Innsyn definerer leserettigheter; Selger arver disse og kan ha tilleggsrettigheter. Strukturen speiler organisasjonen.\n\nAdministrativ gevinst:\nI stedet for å gi SELECT direkte til Anne (og alle andre selgere), endres det på rollenivå. En endring i Innsyn gjelder automatisk for alle med Selger-rollen. Ny ansatt? Tildel Selger, ikke manuell oppsett av rettigheter."
+        }
+      ]
+    }
+  ]
+}

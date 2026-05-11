@@ -1,0 +1,219 @@
+{
+  "name": "Øvelse 2",
+  "sections": [
+    {
+      "title": "Del 1: Sann / Usann",
+      "info": "2 poeng per spørsmål. Svar med Sann eller Usann.",
+      "type": "truefalse",
+      "pointsEach": 2,
+      "questions": [
+        {
+          "text": "En AFTER-trigger kan brukes til å loggføre endringer i en annen tabell.",
+          "correct": true,
+          "explanation": "SANN. AFTER-triggere kjøres etter at operasjonen er fullført og brukes typisk til å loggføre endringer i separate loggtabeller."
+        },
+        {
+          "text": "En indeks reduserer alltid total kjøretid for en databaseapplikasjon.",
+          "correct": false,
+          "explanation": "USANN. Indekser gjør skriveoperasjoner tregere (INSERT/UPDATE/DELETE) på grunn av vedlikehold av indeksstrukturen. I skrivetunge applikasjoner kan total kjøretid øke."
+        },
+        {
+          "text": "En transaksjon kan være delvis gjennomført dersom systemet krasjer.",
+          "correct": false,
+          "explanation": "USANN. Atomicity i ACID sikrer at en transaksjon enten fullføres helt eller rulles tilbake. Transaksjonsloggen brukes til å gjenopprette en konsistent tilstand etter krasj."
+        },
+        {
+          "text": "SERIALIZABLE garanterer samme resultat som sekvensiell kjøring.",
+          "correct": true,
+          "explanation": "SANN. SERIALIZABLE er det strengeste isolasjonsnivået og garanterer at parallelle transaksjoner gir samme resultat som om de ble kjørt sekvensielt etter hverandre."
+        },
+        {
+          "text": "En rolle i PostgreSQL kan eie objekter.",
+          "correct": true,
+          "explanation": "SANN. Roller i PostgreSQL kan eie databaseobjekter som tabeller, sekvenser og funksjoner."
+        },
+        {
+          "text": "REVOKE CASCADE kan påvirke flere brukere indirekte.",
+          "correct": true,
+          "explanation": "SANN. CASCADE-alternativet gjør at tilbakekalling av en rettighet også fjerner avhengige rettigheter som er videreformidlet gjennom rettighetslenker."
+        },
+        {
+          "text": "En funksjon kan inneholde INSERT, UPDATE og DELETE.",
+          "correct": true,
+          "explanation": "SANN. En lagret funksjon i PL/pgSQL kan inneholde DML-setninger som INSERT, UPDATE og DELETE, i tillegg til SELECT."
+        },
+        {
+          "text": "En BEFORE-trigger kan forhindre at en rad lagres.",
+          "correct": true,
+          "explanation": "SANN. En BEFORE-trigger kan kaste en exception (RAISE EXCEPTION) eller returnere NULL for å avbryte operasjonen og hindre at raden lagres."
+        },
+        {
+          "text": "JSON kan inneholde nested arrays og objekter.",
+          "correct": true,
+          "explanation": "SANN. JSON støtter nesting av arrays og objekter til vilkårlig dybde, noe som gjør formatet egnet for semistrukturerte data."
+        },
+        {
+          "text": "SELECT INTO kan brukes til å hente flere rader uten problemer.",
+          "correct": false,
+          "explanation": "USANN. SELECT INTO i PL/pgSQL forventer nøyaktig én rad. Returneres ingen rader, settes variabelen til NULL. Returneres flere rader, kastes en TOO_MANY_ROWS-feil."
+        },
+        {
+          "text": "En cursor må alltid returnere én rad.",
+          "correct": false,
+          "explanation": "USANN. En cursor kan returnere null, én eller mange rader. Den itererer gjennom resultatet rad for rad."
+        },
+        {
+          "text": "GRANT OPTION gjelder kun systemrettigheter.",
+          "correct": false,
+          "explanation": "USANN. WITH GRANT OPTION gjelder objektrettigheter (GRANT SELECT ON tabell ... WITH GRANT OPTION). For systemrettigheter brukes WITH ADMIN OPTION ved rollemedlemskap."
+        },
+        {
+          "text": "En bruker kan arve rettigheter fra flere roller.",
+          "correct": true,
+          "explanation": "SANN. En bruker kan være medlem av flere roller og arver (med INHERIT) rettighetene fra alle disse rollene."
+        },
+        {
+          "text": "CHECK constraints og triggere kan begge brukes til forretningsregler.",
+          "correct": true,
+          "explanation": "SANN. CHECK constraints håndhever enkle begrensninger deklarativt. Triggere kan implementere mer komplekse forretningsregler prosedyralt."
+        },
+        {
+          "text": "En lagret prosedyre kan kalles fra en annen prosedyre.",
+          "correct": true,
+          "explanation": "SANN. Lagrede prosedyrer og funksjoner kan kalle hverandre, noe som muliggjør modularisering og gjenbruk av databaselogikk."
+        }
+      ]
+    },
+    {
+      "title": "Del 2: Flervalg",
+      "info": "2 poeng per spørsmål – kun ett riktig svar.",
+      "type": "multiple",
+      "pointsEach": 2,
+      "questions": [
+        {
+          "text": "Hva gjør denne spørringen?\n\nSELECT COUNT(*) FROM Ansatt;",
+          "options": ["Returnerer alle rader", "Returnerer antall rader", "Returnerer én rad per ansatt", "Feil"],
+          "correct": 1,
+          "explanation": "COUNT(*) teller antall rader i tabellen og returnerer ett tall."
+        },
+        {
+          "text": "Hva skjer her?\n\nUPDATE Ansatt SET lønn = lønn + 1000 WHERE avd = 2;",
+          "options": ["Alle ansatte oppdateres", "Kun ansatte i avd 2", "Ingen oppdateres", "Feil"],
+          "correct": 1,
+          "explanation": "WHERE-betingelsen begrenser oppdateringen til kun de radene der avd = 2."
+        },
+        {
+          "text": "Hva gjør denne kommandoen?\n\nGRANT SELECT ON Kunde TO Rolle1;",
+          "options": ["Oppretter rolle", "Gir rettighet", "Fjerner rettighet", "Lager tabell"],
+          "correct": 1,
+          "explanation": "GRANT tildeler SELECT-rettigheten på tabellen Kunde til Rolle1."
+        },
+        {
+          "text": "Hva skjer hvis to transaksjoner oppdaterer samme rad uten låsing?",
+          "options": ["Ingenting", "Deadlock", "Lost update", "Crash"],
+          "correct": 2,
+          "explanation": "Uten låsing kan begge transaksjoner lese samme verdi, beregne og skrive tilbake, slik at den ene oppdateringen overskrives (lost update)."
+        },
+        {
+          "text": "Hva kjennetegner en AFTER-trigger?",
+          "options": ["Kan endre NEW", "Kjøres etter lagring", "Kjøres før SQL", "Kjøres manuelt"],
+          "correct": 1,
+          "explanation": "AFTER-trigger kjøres etter at raden er lagret. Den kan ikke endre NEW-verdier (data er allerede skrevet)."
+        },
+        {
+          "text": "Hva brukes reltuples primært til i PostgreSQL?",
+          "options": ["Å lagre blokkstørrelsen for tabellen", "Å angi eksakt antall rader i tabellen til enhver tid", "Å angi et estimat for antall rader/tuples i tabellen", "Å angi antall indekser på tabellen"],
+          "correct": 2,
+          "explanation": "reltuples i pg_class er et estimat på antall rader (tuples) i tabellen, oppdatert av ANALYZE – ikke et eksakt tall."
+        },
+        {
+          "text": "Hva gjør denne?\n\nREVOKE UPDATE ON Ansatt FROM Per;",
+          "options": ["Gir UPDATE", "Fjerner UPDATE", "Lager tabell", "Gir SELECT"],
+          "correct": 1,
+          "explanation": "REVOKE fjerner UPDATE-rettigheten på tabellen Ansatt fra brukeren Per."
+        },
+        {
+          "text": "Hva kjennetegner BEFORE trigger?",
+          "options": ["Kjøres etter lagring", "Kan endre NEW", "Kjøres manuelt", "Kun logging"],
+          "correct": 1,
+          "explanation": "BEFORE-trigger kjøres før raden lagres og kan modifisere NEW-verdier som deretter skrives til databasen."
+        },
+        {
+          "text": "Hva er riktig om roller?",
+          "options": ["Kan ikke ha rettigheter", "Kan inneholde andre roller", "Kan ikke brukes til sikkerhet", "Kan ikke arve rettigheter"],
+          "correct": 1,
+          "explanation": "Roller kan inneholde andre roller som medlemmer, noe som muliggjør hierarkisk rettighetsstyring."
+        },
+        {
+          "text": "Hva skjer ved deadlock?",
+          "options": ["Begge transaksjoner fortsetter", "En transaksjon avbrytes", "Data slettes", "System stopper"],
+          "correct": 1,
+          "explanation": "Ved deadlock oppdager DBMS-et syklusen og avbryter (ruller tilbake) én av transaksjonene for å løse opp fastlåsingen."
+        },
+        {
+          "text": "Hva er en cursor?",
+          "options": ["Tabell", "Pekere til rader", "Indeks", "Trigger"],
+          "correct": 1,
+          "explanation": "En cursor er en mekanisme for å iterere gjennom et spørringsresultat rad for rad."
+        },
+        {
+          "text": "Hva er riktig om SELECT INTO i PL/pgSQL?",
+          "options": ["Det brukes bare til å opprette nye tabeller", "Det brukes til å kopiere kolonneverdier inn i lokale variabler", "Det kan bare brukes sammen med DELETE", "Det brukes bare uten WHERE-betingelse"],
+          "correct": 1,
+          "explanation": "SELECT INTO i PL/pgSQL henter én rad og kopierer kolonneverdiene til lokale variabler i blokken."
+        },
+        {
+          "text": "I et databasesystem er en blokk best beskrevet som:",
+          "options": ["En kolonne i en tabell", "Den minste enheten for overføring av data mellom minne og disk", "En indeksrad", "En samling databaser"],
+          "correct": 1,
+          "explanation": "En blokk/side er den minste enheten som overføres mellom disk og bufferminne i et databasesystem."
+        },
+        {
+          "text": "I PostgreSQL brukes metadatafeltet relpages typisk til å angi:",
+          "options": ["antall kolonner i tabellen", "antall blokker/sider tabellen bruker", "antall primærnøkler", "antall brukere som har tilgang til tabellen"],
+          "correct": 1,
+          "explanation": "relpages i pg_class angir estimert antall diskblokker (sider) tabellen bruker, oppdatert av ANALYZE/VACUUM."
+        },
+        {
+          "text": "I PostgreSQL er standard blokkstørrelse 8192 byte. En tabell har relpages = 250. Hva kan vi konkludere med?",
+          "options": ["Tabellen har nøyaktig 250 rader", "Tabellen bruker omtrent 250 blokker, og lagringsstørrelsen er omtrent 250 × 8192 byte", "Tabellen har nøyaktig 8192 rader", "Tabellen har 250 kolonner"],
+          "correct": 1,
+          "explanation": "relpages = 250 betyr tabellen bruker ca. 250 blokker. Med blokkstørrelse 8192 byte er total størrelse ca. 250 × 8192 = 2 048 000 byte ≈ 2 MB."
+        }
+      ]
+    },
+    {
+      "title": "Del 3: Forklar",
+      "info": "6 poeng per oppgave.",
+      "type": "essay",
+      "pointsEach": 6,
+      "questions": [
+        {
+          "title": "Oppgave 1 (6 poeng)",
+          "text": "Hva skjer i dette scenariet?\n\nGRANT SELECT ON t TO A WITH GRANT OPTION;\nA gir videre til B\nB gir videre til C\nREVOKE SELECT FROM A CASCADE;",
+          "model": "A får SELECT på t med rett til å gi videre (WITH GRANT OPTION).\nA gir SELECT til B, B gir videre til C – dette danner en rettighetslenke: A→B→C.\n\nREVOKE SELECT FROM A CASCADE:\n– A mister SELECT.\n– Fordi CASCADE er spesifisert, fjernes også alle avhengige rettigheter som kan spores tilbake til A: B mister SELECT og C mister SELECT.\n– Alle tre mister altså rettigheten."
+        },
+        {
+          "title": "Oppgave 2 (6 poeng)",
+          "text": "Forklar hvorfor roller gjør sikkerhetsadministrasjon enklere",
+          "model": "I stedet for å gi rettigheter til hver enkelt bruker, samles rettigheter i roller.\nBrukere tildeles roller, og arver rettighetene.\n\nFordeler:\n– Endringer gjøres på rollenivå og gjelder alle medlemmer automatisk.\n– Nye brukere trenger bare å tildeles riktig rolle.\n– Enklere å håndheve jevne tilgangsnivåer på tvers av mange brukere.\n– Hierarkiske roller muliggjør strukturert tilgangsstyring."
+        },
+        {
+          "title": "Oppgave 3 (6 poeng)",
+          "text": "Studer transaksjonen under:\n\nBEGIN;\nINSERT INTO Ordre(OrdreNr, KNr) VALUES (20599, 5009);\nINSERT INTO Ordrelinje(OrdreNr, VNr, Antall) VALUES (20599, '44939', 5);\nUPDATE Vare\nSET Antall = Antall - 5\nWHERE VareNr = '44939';\nCOMMIT;\n\nForklar:\n– hvorfor dette bør behandles som én transaksjon\n– hva som kan gå galt dersom systemet krasjer etter den andre setningen, men før COMMIT\n– hvilken ACID-egenskap som særlig er relevant her",
+          "model": "Hvorfor én transaksjon: Alle tre setningene er logisk avhengige. Ordrelinjen forutsetter en ordre, og varebeholdningen skal reduseres som følge av ordren. Behandles de separat, risikerer man inkonsistente data.\n\nVed krasj etter andre INSERT men før COMMIT: Ordren og ordrelinjen er registrert, men varelageret er ikke oppdatert. Databasen ville vise at 5 enheter av vare 44939 er solgt, men beholdningen er fortsatt uendret – inkonsistent tilstand.\n\nAktuelle ACID-egenskaper:\n– Atomicity: Alle tre operasjonene skal utføres eller ingen av dem.\n– Consistency: Databasen skal gå fra en konsistent tilstand til en annen."
+        },
+        {
+          "title": "Oppgave 4 (6 poeng)",
+          "text": "Gitt tabell t:\n\n| id | verdi |\n|  1 |    10 |\n|  2 |    20 |\n\nForklar:\n– Hva blir resultatet?\nSELECT SUM(verdi) FROM t;\n\n– Hva skjer her?\nSELECT verdi INTO v FROM t WHERE id = 1;\n\n– Hva blir resultatet?\nSELECT verdi FROM t WHERE verdi > 100;\n\n– Hva skjer her?\nDELETE FROM t;",
+          "model": "SELECT SUM(verdi): Returnerer 30 (10 + 20).\n\nSELECT verdi INTO v FROM t WHERE id = 1: Henter verdien 10 fra raden med id = 1 og lagrer den i variabelen v.\n\nSELECT verdi FROM t WHERE verdi > 100: Returnerer et tomt resultatsett – ingen rader har verdi > 100.\n\nDELETE FROM t: Sletter alle rader i tabellen. Tabellstrukturen beholdes, men alle data fjernes."
+        },
+        {
+          "title": "Oppgave 5 (6 poeng)",
+          "text": "Studer triggerfunksjonen:\n\nCREATE OR REPLACE FUNCTION tr_ansatt_fn()\nRETURNS trigger\nLANGUAGE plpgsql AS $$\nBEGIN\n   NEW.fornavn := UPPER(NEW.fornavn);\n   NEW.endretdato := CURRENT_DATE;\n   RETURN NEW;\nEND;\n$$;\n\nog triggeren:\n\nCREATE TRIGGER tr_ansatt\nBEFORE UPDATE ON Ansatt\nFOR EACH ROW\nEXECUTE FUNCTION tr_ansatt_fn();\n\nForklar hva som skjer når følgende kjøres:\n\nUPDATE Ansatt\nSET Fornavn = 'Petter'\nWHERE AnsNr = 2;\n\nBeskriv både effekten på Fornavn og på Endretdato, og hvorfor dette krever en BEFORE-trigger.",
+          "model": "Triggeren tr_ansatt er en BEFORE UPDATE rad-trigger. Når UPDATE kjøres på ansatt med AnsNr = 2:\n\n1. Triggerfunksjonen aktiveres FØR raden lagres.\n2. NEW.fornavn settes til UPPER('Petter') = 'PETTER'.\n3. NEW.endretdato settes til dagens dato (CURRENT_DATE).\n4. RETURN NEW returnerer den modifiserte raden, som deretter skrives til databasen.\n\nResultat:\n– Fornavn lagres som 'PETTER' (ikke 'Petter').\n– Endretdato oppdateres automatisk til dagens dato.\n\nHvorfor BEFORE: BEFORE-trigger kjøres før raden skrives, slik at den kan endre NEW-verdiene. En AFTER-trigger kan ikke endre data som allerede er lagret."
+        }
+      ]
+    }
+  ]
+}
