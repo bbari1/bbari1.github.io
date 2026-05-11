@@ -507,8 +507,23 @@ async function loadExams() {
     document.getElementById('qArea').innerHTML =
       `<div class="err-box">
         <strong>Kunne ikke laste eksamensfilene.</strong><br><br>
-        ${err.message}<br><br>
-        Kontroller at JSON-filene ligger i mappen <code>eksamen/</code> og at du kjører appen via en webserver (ikke direkte fra fil). Tips: <code>python -m http.server 8000</code>
+        <em>${err.message}</em><br><br>
+        <strong>Sjekkliste for GitHub Pages:</strong><br>
+        1. Kontroller at repoet er satt til <strong>Public</strong><br>
+        2. Gå til <em>Settings → Pages → Source</em> og velg riktig branch (main/master)<br>
+        3. Filstrukturen må være:<br>
+        <code style="display:block;margin:8px 0;background:#fef2f2;padding:8px;border-radius:4px">
+        repo/<br>
+        ├── index.html<br>
+        ├── eksamen/<br>
+        │   ├── eksamen1.json<br>
+        │   ├── eksamen2.json<br>
+        │   └── eksamen3.json<br>
+        └── pensum/<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;└── *.pdf
+        </code>
+        4. Vent 1–2 minutter etter push – GitHub Pages bruker litt tid<br>
+        5. Åpne nettstedets URL (ikke filbanen direkte)
       </div>`;
   }
 }
@@ -556,7 +571,7 @@ function renderSidebar() {
       const a = answers[cExam][si][qi];
       const p = pts[cExam][si][qi];
       const isActive = si === cSec && qi === cQ;
-      const tp = sec.type==='truefalse'?'T/F': sec.type==='multiple'?(sec.subsections?'MC':'MC'):'Essay';
+      const tp = sec.type==='truefalse'?'T/F': sec.type==='multiple'?'MC':'Essay';
 
       // sidebar item
       let cls = 'qnav' + (isActive?' active':'');
@@ -654,19 +669,10 @@ function renderQuestion() {
   gNum += cQ;
   const totalQ = exam.sections.reduce((s,sec)=>s+sec.questions.length,0);
 
-  // subsection label
-  let subsecLabel = '';
-  if (sec.type === 'multiple' && sec.subsections) {
-    // find which subsection this q belongs to
-    let idx = 0;
-    for (const sub of sec.subsections) {
-      if (cQ >= idx && cQ < idx + sub.questions.length) {
-        subsecLabel = `<span style="font-size:12px;color:var(--muted);font-style:italic">${sub.title}</span>`;
-        break;
-      }
-      idx += sub.questions.length;
-    }
-  }
+  // subsection label (stored on each question after flattening)
+  const subsecLabel = q.subsection
+    ? `<span style="font-size:12px;color:var(--muted);font-style:italic">${q.subsection}</span>`
+    : '';
 
   const navRow = `
     <div class="bgrp">
