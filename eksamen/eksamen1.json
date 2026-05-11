@@ -89,211 +89,306 @@
       "info": "2 poeng per spørsmål – kun ett riktig svar.",
       "type": "multiple",
       "pointsEach": 2,
-      "subsections": [
+      "questions": [
         {
-          "title": "Indekser og lagring",
-          "questions": [
-            {
-              "text": "Hva er hovedhensikten med en indeks?",
-              "options": ["Redusere lagringsplass", "Effektivisere søk", "Øke dataintegritet", "Kryptere data"],
-              "correct": 1,
-              "explanation": "En indeks effektiviserer søk ved å gi rask tilgang til rader uten full tabellskanning."
-            },
-            {
-              "text": "Hva kjennetegner en heap-fil?",
-              "options": ["Sortert lagring", "Data lagres tilfeldig", "Kun én blokk", "Kun primærnøkler lagres"],
-              "correct": 1,
-              "explanation": "En heap-fil lagrer rader i tilfeldig/usortert rekkefølge etter hvert som de settes inn."
-            },
-            {
-              "text": "Hva er en blokk?",
-              "options": ["En rad i en tabell", "Minste enhet for diskoverføring", "En indeksstruktur", "En datatype"],
-              "correct": 1,
-              "explanation": "En blokk (side) er den minste enheten som overføres mellom disk og minne i et databasesystem."
-            }
-          ]
+          "text": "Hva er hovedhensikten med en indeks?",
+          "options": [
+            "Redusere lagringsplass",
+            "Effektivisere søk",
+            "Øke dataintegritet",
+            "Kryptere data"
+          ],
+          "correct": 1,
+          "explanation": "En indeks effektiviserer søk ved å gi rask tilgang til rader uten full tabellskanning.",
+          "subsection": "Indekser og lagring"
         },
         {
-          "title": "Transaksjoner",
-          "questions": [
-            {
-              "text": "Hva betyr Atomicity?",
-              "options": ["Transaksjoner skjer parallelt", "Alle eller ingen operasjoner utføres", "Data lagres permanent", "Data er kryptert"],
-              "correct": 1,
-              "explanation": "Atomicity betyr at alle operasjoner i en transaksjon enten fullføres helt, eller ingen av dem utføres."
-            },
-            {
-              "text": "Hva gjør ROLLBACK?",
-              "options": ["Bekrefter transaksjon", "Lagrer data permanent", "Angrer transaksjon", "Låser databasen"],
-              "correct": 2,
-              "explanation": "ROLLBACK angrer alle endringer gjort i gjeldende transaksjon og bringer databasen tilbake til tilstanden før transaksjonen startet."
-            },
-            {
-              "text": "Hva er et eksempel på samtidighetsproblem?",
-              "options": ["Backup kun", "Lost update", "Indeksering", "JSON parsing"],
-              "correct": 1,
-              "explanation": "Lost update er et klassisk samtidighetsproblem der to transaksjoner leser og overskriver samme verdi, slik at den ene oppdateringen går tapt."
-            }
-          ]
+          "text": "Hva kjennetegner en heap-fil?",
+          "options": [
+            "Sortert lagring",
+            "Data lagres tilfeldig",
+            "Kun én blokk",
+            "Kun primærnøkler lagres"
+          ],
+          "correct": 1,
+          "explanation": "En heap-fil lagrer rader i tilfeldig/usortert rekkefølge etter hvert som de settes inn.",
+          "subsection": "Indekser og lagring"
         },
         {
-          "title": "Låser og samtidighet",
-          "questions": [
-            {
-              "text": "Hva er en eksklusiv lås?",
-              "options": ["Kun lesing tillatt", "Kun skriving tillatt", "Ingen tilgang", "Kun admin"],
-              "correct": 1,
-              "explanation": "En eksklusiv lås (X-lock) gir én transaksjon eksklusiv skrivetilgang; andre transaksjoner kan verken lese eller skrive."
-            },
-            {
-              "text": "Hva er tofaselåsing?",
-              "options": ["To samtidige transaksjoner", "Alle låser tas før opplåsing", "Kun leselåser", "Ingen låser"],
-              "correct": 1,
-              "explanation": "Tofaselåsing (2PL) innebærer at en transaksjon først tar alle nødvendige låser (veksende fase), deretter slipper dem uten å ta nye (avtagende fase)."
-            }
-          ]
+          "text": "Hva er en blokk?",
+          "options": [
+            "En rad i en tabell",
+            "Minste enhet for diskoverføring",
+            "En indeksstruktur",
+            "En datatype"
+          ],
+          "correct": 1,
+          "explanation": "En blokk (side) er den minste enheten som overføres mellom disk og minne i et databasesystem.",
+          "subsection": "Indekser og lagring"
         },
         {
-          "title": "Lagrede rutiner og triggere",
-          "questions": [
-            {
-              "text": "Hva er en trigger?",
-              "options": ["En indeks", "Automatisk kode som kjøres ved hendelser", "En datatype", "En database"],
-              "correct": 1,
-              "explanation": "En trigger er en lagret rutine som kjøres automatisk som respons på INSERT, UPDATE eller DELETE på en tabell."
-            },
-            {
-              "text": "Når kjøres en AFTER-trigger?",
-              "options": ["Før oppdatering", "Etter oppdatering", "Ved SELECT", "Ved COMMIT"],
-              "correct": 1,
-              "explanation": "En AFTER-trigger kjøres etter at den utløsende SQL-operasjonen er fullført og dataene er lagret."
-            },
-            {
-              "text": "Hva brukes SELECT INTO til?",
-              "options": ["Lage tabeller", "Kopiere resultat til variabler", "Slette data", "Oppdatere data"],
-              "correct": 1,
-              "explanation": "SELECT INTO i PL/pgSQL brukes til å hente en enkelt rad og lagre kolonneverdiene i lokale variabler."
-            }
-          ]
+          "text": "Hva betyr Atomicity?",
+          "options": [
+            "Transaksjoner skjer parallelt",
+            "Alle eller ingen operasjoner utføres",
+            "Data lagres permanent",
+            "Data er kryptert"
+          ],
+          "correct": 1,
+          "explanation": "Atomicity betyr at alle operasjoner i en transaksjon enten fullføres helt, eller ingen av dem utføres.",
+          "subsection": "Transaksjoner"
         },
         {
-          "title": "DBA og sikkerhet",
-          "questions": [
-            {
-              "text": "Hva er en DBA-oppgave?",
-              "options": ["Skrive frontend-kode", "Backup og recovery", "Designe UI", "Lage API"],
-              "correct": 1,
-              "explanation": "En DBA (Database Administrator) har ansvar for backup, recovery, ytelse, sikkerhet og administrasjon av databasesystemet."
-            },
-            {
-              "text": "Hva er forskjellen på system- og objektrettigheter?",
-              "options": ["Ingen forskjell", "Systemrettigheter gjelder hele DBMS", "Objektrettigheter gjelder brukere", "Systemrettigheter gjelder kun tabeller"],
-              "correct": 1,
-              "explanation": "Systemrettigheter (f.eks. CREATE DATABASE) gjelder operasjoner på DBMS-nivå. Objektrettigheter (f.eks. SELECT på en tabell) gjelder spesifikke databaseobjekter."
-            }
-          ]
+          "text": "Hva gjør ROLLBACK?",
+          "options": [
+            "Bekrefter transaksjon",
+            "Lagrer data permanent",
+            "Angrer transaksjon",
+            "Låser databasen"
+          ],
+          "correct": 2,
+          "explanation": "ROLLBACK angrer alle endringer gjort i gjeldende transaksjon og bringer databasen tilbake til tilstanden før transaksjonen startet.",
+          "subsection": "Transaksjoner"
         },
         {
-          "title": "Sky og arkitektur",
-          "questions": [
-            {
-              "text": "Hva er DBaaS?",
-              "options": ["Database på egen maskin", "Database som tjeneste", "Filsystem", "Operativsystem"],
-              "correct": 1,
-              "explanation": "DBaaS (Database as a Service) er en skybasert tjeneste der leverandøren håndterer drift, vedlikehold og skalering av databasen."
-            },
-            {
-              "text": "Hva er klient/tjener-arkitektur?",
-              "options": ["Kun database", "Klient kommuniserer med server", "Kun lokal lagring", "Ingen nettverk"],
-              "correct": 1,
-              "explanation": "I klient/tjener-arkitektur sender klienten forespørsler over nettverket til en server som behandler dem og returnerer svar."
-            }
-          ]
+          "text": "Hva er et eksempel på samtidighetsproblem?",
+          "options": [
+            "Backup kun",
+            "Lost update",
+            "Indeksering",
+            "JSON parsing"
+          ],
+          "correct": 1,
+          "explanation": "Lost update er et klassisk samtidighetsproblem der to transaksjoner leser og overskriver samme verdi, slik at den ene oppdateringen går tapt.",
+          "subsection": "Transaksjoner"
         },
         {
-          "title": "JSON / XML",
-          "questions": [
-            {
-              "text": "Hva kjennetegner JSON?",
-              "options": ["Binært format", "Tekstbasert og fleksibelt", "Kun numerisk", "Kun tabeller"],
-              "correct": 1,
-              "explanation": "JSON er et tekstbasert, lettvekts datautvekslingsformat som støtter nøkkel-verdi-par, arrays og nesting."
-            },
-            {
-              "text": "Hva er XPath?",
-              "options": ["SQL språk", "XML spørrespråk", "JSON parser", "Trigger"],
-              "correct": 1,
-              "explanation": "XPath er et spørrespråk for å navigere og velge noder i et XML-dokument."
-            }
-          ]
+          "text": "Hva er en eksklusiv lås?",
+          "options": [
+            "Kun lesing tillatt",
+            "Kun skriving tillatt",
+            "Ingen tilgang",
+            "Kun admin"
+          ],
+          "correct": 1,
+          "explanation": "En eksklusiv lås (X-lock) gir én transaksjon eksklusiv skrivetilgang; andre transaksjoner kan verken lese eller skrive.",
+          "subsection": "Låser og samtidighet"
         },
         {
-          "title": "NoSQL",
-          "questions": [
-            {
-              "text": "Hva er en dokumentdatabase?",
-              "options": ["Relasjonstabeller", "JSON/XML dokumenter", "Kun nøkler", "Kun grafer"],
-              "correct": 1,
-              "explanation": "En dokumentdatabase lagrer data som selvstendige dokumenter (typisk JSON eller XML) med fleksibel struktur."
-            },
-            {
-              "text": "Hva betyr NoSQL?",
-              "options": ["No SQL allowed", "Not Only SQL", "New SQL", "Null SQL"],
-              "correct": 1,
-              "explanation": "NoSQL står for 'Not Only SQL' og dekker databaser som ikke utelukkende bygger på relasjonsdatabasemodellen."
-            }
-          ]
+          "text": "Hva er tofaselåsing?",
+          "options": [
+            "To samtidige transaksjoner",
+            "Alle låser tas før opplåsing",
+            "Kun leselåser",
+            "Ingen låser"
+          ],
+          "correct": 1,
+          "explanation": "Tofaselåsing (2PL) innebærer at en transaksjon først tar alle nødvendige låser (veksende fase), deretter slipper dem uten å ta nye (avtagende fase).",
+          "subsection": "Låser og samtidighet"
         },
         {
-          "title": "Roller og rettigheter",
-          "questions": [
-            {
-              "text": "Hva betyr INHERIT i PostgreSQL?",
-              "options": ["Rolle kan logge inn", "Rolle arver rettigheter", "Rolle slettes", "Rolle krypteres"],
-              "correct": 1,
-              "explanation": "INHERIT er et rolleattributt i PostgreSQL som gjør at rollen automatisk arver rettighetene til roller den er medlem av."
-            },
-            {
-              "text": "Hva gjør GRANT?",
-              "options": ["Fjerner rettigheter", "Gir rettigheter", "Sletter data", "Lager tabell"],
-              "correct": 1,
-              "explanation": "GRANT brukes til å tildele rettigheter (til objekt eller system) til en bruker eller rolle."
-            }
-          ]
+          "text": "Hva er en trigger?",
+          "options": [
+            "En indeks",
+            "Automatisk kode som kjøres ved hendelser",
+            "En datatype",
+            "En database"
+          ],
+          "correct": 1,
+          "explanation": "En trigger er en lagret rutine som kjøres automatisk som respons på INSERT, UPDATE eller DELETE på en tabell.",
+          "subsection": "Lagrede rutiner og triggere"
         },
         {
-          "title": "Recovery",
-          "questions": [
-            {
-              "text": "Hva brukes transaksjonsloggen til?",
-              "options": ["Backup", "Recovery og logging", "Kryptering", "Indekser"],
-              "correct": 1,
-              "explanation": "Transaksjonsloggen (WAL i PostgreSQL) brukes til recovery ved feil – den lar systemet rulle frem eller tilbake transaksjoner."
-            },
-            {
-              "text": "Hva gjør checkpoints?",
-              "options": ["Øker feil", "Reduserer recovery-tid", "Sletter data", "Stopper DB"],
-              "correct": 1,
-              "explanation": "Checkpoints skriver buffrede sider til disk og merker et punkt i loggen, slik at recovery etter et krasj starter fra checkpoint-punktet i stedet for loggens begynnelse."
-            }
-          ]
+          "text": "Når kjøres en AFTER-trigger?",
+          "options": [
+            "Før oppdatering",
+            "Etter oppdatering",
+            "Ved SELECT",
+            "Ved COMMIT"
+          ],
+          "correct": 1,
+          "explanation": "En AFTER-trigger kjøres etter at den utløsende SQL-operasjonen er fullført og dataene er lagret.",
+          "subsection": "Lagrede rutiner og triggere"
         },
         {
-          "title": "Avansert",
-          "questions": [
-            {
-              "text": "Hva er en cursor?",
-              "options": ["Indeks", "Pekere til rader", "Tabell", "Trigger"],
-              "correct": 1,
-              "explanation": "En cursor er en database-mekanisme som lar deg iterere gjennom resultatet av en spørring rad for rad."
-            },
-            {
-              "text": "Hva er en fordel med lagrede prosedyrer?",
-              "options": ["Øker nettverkstrafikk", "Gjenbruk og ytelse", "Mindre sikkerhet", "Ingen fordel"],
-              "correct": 1,
-              "explanation": "Lagrede prosedyrer gir gjenbruk av kode, redusert nettverkstrafikk (logikk kjøres nær dataene) og forbedret ytelse gjennom forhåndskompilering."
-            }
-          ]
+          "text": "Hva brukes SELECT INTO til?",
+          "options": [
+            "Lage tabeller",
+            "Kopiere resultat til variabler",
+            "Slette data",
+            "Oppdatere data"
+          ],
+          "correct": 1,
+          "explanation": "SELECT INTO i PL/pgSQL brukes til å hente en enkelt rad og lagre kolonneverdiene i lokale variabler.",
+          "subsection": "Lagrede rutiner og triggere"
+        },
+        {
+          "text": "Hva er en DBA-oppgave?",
+          "options": [
+            "Skrive frontend-kode",
+            "Backup og recovery",
+            "Designe UI",
+            "Lage API"
+          ],
+          "correct": 1,
+          "explanation": "En DBA (Database Administrator) har ansvar for backup, recovery, ytelse, sikkerhet og administrasjon av databasesystemet.",
+          "subsection": "DBA og sikkerhet"
+        },
+        {
+          "text": "Hva er forskjellen på system- og objektrettigheter?",
+          "options": [
+            "Ingen forskjell",
+            "Systemrettigheter gjelder hele DBMS",
+            "Objektrettigheter gjelder brukere",
+            "Systemrettigheter gjelder kun tabeller"
+          ],
+          "correct": 1,
+          "explanation": "Systemrettigheter (f.eks. CREATE DATABASE) gjelder operasjoner på DBMS-nivå. Objektrettigheter (f.eks. SELECT på en tabell) gjelder spesifikke databaseobjekter.",
+          "subsection": "DBA og sikkerhet"
+        },
+        {
+          "text": "Hva er DBaaS?",
+          "options": [
+            "Database på egen maskin",
+            "Database som tjeneste",
+            "Filsystem",
+            "Operativsystem"
+          ],
+          "correct": 1,
+          "explanation": "DBaaS (Database as a Service) er en skybasert tjeneste der leverandøren håndterer drift, vedlikehold og skalering av databasen.",
+          "subsection": "Sky og arkitektur"
+        },
+        {
+          "text": "Hva er klient/tjener-arkitektur?",
+          "options": [
+            "Kun database",
+            "Klient kommuniserer med server",
+            "Kun lokal lagring",
+            "Ingen nettverk"
+          ],
+          "correct": 1,
+          "explanation": "I klient/tjener-arkitektur sender klienten forespørsler over nettverket til en server som behandler dem og returnerer svar.",
+          "subsection": "Sky og arkitektur"
+        },
+        {
+          "text": "Hva kjennetegner JSON?",
+          "options": [
+            "Binært format",
+            "Tekstbasert og fleksibelt",
+            "Kun numerisk",
+            "Kun tabeller"
+          ],
+          "correct": 1,
+          "explanation": "JSON er et tekstbasert, lettvekts datautvekslingsformat som støtter nøkkel-verdi-par, arrays og nesting.",
+          "subsection": "JSON / XML"
+        },
+        {
+          "text": "Hva er XPath?",
+          "options": [
+            "SQL språk",
+            "XML spørrespråk",
+            "JSON parser",
+            "Trigger"
+          ],
+          "correct": 1,
+          "explanation": "XPath er et spørrespråk for å navigere og velge noder i et XML-dokument.",
+          "subsection": "JSON / XML"
+        },
+        {
+          "text": "Hva er en dokumentdatabase?",
+          "options": [
+            "Relasjonstabeller",
+            "JSON/XML dokumenter",
+            "Kun nøkler",
+            "Kun grafer"
+          ],
+          "correct": 1,
+          "explanation": "En dokumentdatabase lagrer data som selvstendige dokumenter (typisk JSON eller XML) med fleksibel struktur.",
+          "subsection": "NoSQL"
+        },
+        {
+          "text": "Hva betyr NoSQL?",
+          "options": [
+            "No SQL allowed",
+            "Not Only SQL",
+            "New SQL",
+            "Null SQL"
+          ],
+          "correct": 1,
+          "explanation": "NoSQL står for 'Not Only SQL' og dekker databaser som ikke utelukkende bygger på relasjonsdatabasemodellen.",
+          "subsection": "NoSQL"
+        },
+        {
+          "text": "Hva betyr INHERIT i PostgreSQL?",
+          "options": [
+            "Rolle kan logge inn",
+            "Rolle arver rettigheter",
+            "Rolle slettes",
+            "Rolle krypteres"
+          ],
+          "correct": 1,
+          "explanation": "INHERIT er et rolleattributt i PostgreSQL som gjør at rollen automatisk arver rettighetene til roller den er medlem av.",
+          "subsection": "Roller og rettigheter"
+        },
+        {
+          "text": "Hva gjør GRANT?",
+          "options": [
+            "Fjerner rettigheter",
+            "Gir rettigheter",
+            "Sletter data",
+            "Lager tabell"
+          ],
+          "correct": 1,
+          "explanation": "GRANT brukes til å tildele rettigheter (til objekt eller system) til en bruker eller rolle.",
+          "subsection": "Roller og rettigheter"
+        },
+        {
+          "text": "Hva brukes transaksjonsloggen til?",
+          "options": [
+            "Backup",
+            "Recovery og logging",
+            "Kryptering",
+            "Indekser"
+          ],
+          "correct": 1,
+          "explanation": "Transaksjonsloggen (WAL i PostgreSQL) brukes til recovery ved feil – den lar systemet rulle frem eller tilbake transaksjoner.",
+          "subsection": "Recovery"
+        },
+        {
+          "text": "Hva gjør checkpoints?",
+          "options": [
+            "Øker feil",
+            "Reduserer recovery-tid",
+            "Sletter data",
+            "Stopper DB"
+          ],
+          "correct": 1,
+          "explanation": "Checkpoints skriver buffrede sider til disk og merker et punkt i loggen, slik at recovery etter et krasj starter fra checkpoint-punktet i stedet for loggens begynnelse.",
+          "subsection": "Recovery"
+        },
+        {
+          "text": "Hva er en cursor?",
+          "options": [
+            "Indeks",
+            "Pekere til rader",
+            "Tabell",
+            "Trigger"
+          ],
+          "correct": 1,
+          "explanation": "En cursor er en database-mekanisme som lar deg iterere gjennom resultatet av en spørring rad for rad.",
+          "subsection": "Avansert"
+        },
+        {
+          "text": "Hva er en fordel med lagrede prosedyrer?",
+          "options": [
+            "Øker nettverkstrafikk",
+            "Gjenbruk og ytelse",
+            "Mindre sikkerhet",
+            "Ingen fordel"
+          ],
+          "correct": 1,
+          "explanation": "Lagrede prosedyrer gir gjenbruk av kode, redusert nettverkstrafikk (logikk kjøres nær dataene) og forbedret ytelse gjennom forhåndskompilering.",
+          "subsection": "Avansert"
         }
       ]
     },
