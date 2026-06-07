@@ -1734,6 +1734,15 @@ Denne listen er en sluttkontroll. Hvis du kan forklare alle punktene, dekker du 
 - Event invite notifications.
 - Personal booking approved/denied notifications.
 - Stack-valg: statisk frontend, Firebase Auth, Firestore, realtime listeners, rules.
+- At event-systemet er delt over `window.connectData`, `window.connectFeatures`, `window.connectUi` og `window.connectPages`.
+- At klienten skriver direkte til Firestore, så Firestore rules må validere event ownership, attendee access, invite access og booking approval.
+- At `events/{eventId}/attendees/{uid}` brukes for join/leave i stedet for en array på eventet.
+- At `eventInvites/{eventId}__{invitedUid}` brukes for individuelle invites, notifications og invite acceptance.
+- At `bookingRequests` er egen collection fordi common-room booking er en approval-workflow, ikke bare et vanlig event.
+- At event chats er avledet fra `ownEvents` og `joinedEvents`, og bruker chat-ID-formen `event__{eventId}`.
+- At admin/welfarehost approval finnes i mer enn én data path (`rooms-data.js` og `admin-data.js`), og at dette er et stack-/arkitekturpunkt du kan nevne hvis sensor spør om forbedringer.
+- At `dashboard-event-ui.js` ser ut som eldre/legacy event UI helper, mens hovedflyten bruker `event-form-ui.js`, `event-details-ui.js`, `events-overlay-page.js` og `dashboard-workspace.js`.
+- At duplicate DOM IDs og små UI-typos finnes som teknisk gjeld, men ikke endrer hovedforklaringen av event lifecycle.
 
 ## Rask helhetsflyt
 
