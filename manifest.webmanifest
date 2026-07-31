@@ -1,0 +1,30 @@
+{
+  "name": "VEKTER — pugg smart",
+  "short_name": "VEKTER",
+  "description": "Quiz, flashcards, lærebok og prøveeksamen for vekterfaget.",
+  "lang": "no",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#F4F1E9",
+  "theme_color": "#F4F1E9",
+  "icons": [
+    {
+      "src": "assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
