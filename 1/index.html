@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#4f46e5" />
+<title>Huskeark & øving — Vektereksamen</title>
+<style>
+  :root{
+    --ink:#191c26; --soft:#5f6575; --line:#e7e9f1; --bg:#f5f6fb; --card:#fff;
+    --accent:#4f46e5; --accent-soft:#eef0ff; --ok:#15a34a; --ok-soft:#e6f6ec;
+    --bad:#dc2626; --bad-soft:#fdecec; --mark:#fde68a;
+    --sh:0 1px 2px rgba(20,25,45,.05),0 8px 22px rgba(20,25,45,.07);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5;font-size:16px;padding-bottom:40px}
+  .wrap{max-width:640px;margin:0 auto;padding:0 15px}
+
+  /* header + tabs */
+  header{position:sticky;top:0;z-index:20;background:rgba(245,246,251,.9);
+    backdrop-filter:saturate(180%) blur(10px);padding:14px 0 8px;border-bottom:1px solid var(--line)}
+  header .wrap{display:flex;flex-direction:column;gap:10px}
+  h1{font-size:1.15rem;margin:0;letter-spacing:-.01em}
+  h1 small{display:block;font-size:.72rem;font-weight:500;color:var(--soft);margin-top:1px}
+  .tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;background:#e9ebf3;padding:4px;border-radius:12px}
+  .tabs button{border:0;background:transparent;font:inherit;font-weight:700;font-size:.8rem;
+    padding:9px 2px;border-radius:9px;color:var(--soft)}
+  .tabs button.active{background:var(--card);color:var(--accent);box-shadow:var(--sh)}
+
+  main{padding-top:16px}
+  .view{display:none;animation:fade .2s ease}
+  .view.on{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+
+  /* reference accordion */
+  details{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:10px;box-shadow:var(--sh);overflow:hidden}
+  summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:14px 16px;font-weight:700}
+  summary::-webkit-details-marker{display:none}
+  summary .n{display:inline-grid;place-items:center;width:24px;height:24px;flex:none;background:var(--accent);color:#fff;border-radius:7px;font-size:.78rem}
+  summary .chev{margin-left:auto;color:var(--soft);transition:transform .2s}
+  details[open] summary .chev{transform:rotate(90deg)}
+  .body{padding:0 16px 16px}
+  table{width:100%;border-collapse:collapse;font-size:.88rem;margin:4px 0}
+  th,td{text-align:left;padding:8px 9px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:.66rem;text-transform:uppercase;letter-spacing:.04em;color:var(--soft);font-weight:700}
+  tr:last-child td{border-bottom:0}
+  mark{background:var(--mark);padding:0 3px;border-radius:3px;font-weight:700}
+  .never{color:var(--bad);font-weight:700}
+  .par{white-space:nowrap;font-weight:600;font-variant-numeric:tabular-nums}
+  .key{background:var(--accent-soft);border-radius:10px;padding:10px 12px;margin:10px 0 2px;font-size:.9rem}
+  .key .t{display:block;font-size:.64rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:2px}
+  .body p{margin:8px 0}
+  ol.c,ul.c{margin:6px 0;padding-left:20px;font-size:.9rem}
+  ol.c li,ul.c li{margin:3px 0}
+  .note{font-size:.82rem;color:var(--soft);margin-top:8px}
+  .note b{color:var(--ink)}
+
+  /* progress */
+  .prog{height:8px;background:#e5e7f0;border-radius:99px;overflow:hidden;margin-bottom:14px}
+  .prog>span{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .3s ease;width:0}
+  .meta{display:flex;justify-content:space-between;font-size:.8rem;color:var(--soft);font-weight:600;margin-bottom:8px}
+
+  /* flashcards */
+  .flash{perspective:1400px;height:270px;margin-bottom:14px}
+  .flip{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.2,.8,.2,1);transform-style:preserve-3d;cursor:pointer}
+  .flip.flipped{transform:rotateY(180deg)}
+  .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+    padding:26px;border-radius:18px;box-shadow:var(--sh);border:1px solid var(--line)}
+  .front{background:var(--card)}
+  .back{background:var(--accent);color:#fff;transform:rotateY(180deg);border-color:transparent}
+  .face .lbl{font-size:.66rem;text-transform:uppercase;letter-spacing:.1em;opacity:.6;font-weight:800;margin-bottom:10px}
+  .face .q{font-size:1.25rem;font-weight:700}
+  .face .a{font-size:1.15rem;font-weight:600}
+  .hint{text-align:center;font-size:.78rem;color:var(--soft);margin:-4px 0 14px}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .btn{border:0;font:inherit;font-weight:700;padding:14px;border-radius:12px;cursor:pointer;box-shadow:var(--sh)}
+  .btn.again{background:var(--bad-soft);color:var(--bad)}
+  .btn.know{background:var(--ok-soft);color:var(--ok)}
+  .btn.primary{background:var(--accent);color:#fff;width:100%}
+  .btn:disabled{opacity:.4}
+  .center{text-align:center;padding:30px 10px}
+  .center .big{font-size:2.4rem;font-weight:800}
+
+  /* quiz */
+  .q-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--sh);margin-bottom:12px}
+  .q-text{font-size:1.15rem;font-weight:700;margin:0 0 14px}
+  .opts{display:flex;flex-direction:column;gap:9px}
+  .opt{display:flex;align-items:center;gap:11px;text-align:left;border:2px solid var(--line);background:#fff;
+    border-radius:12px;padding:13px 14px;font:inherit;cursor:pointer;font-size:.98rem}
+  .opt .k{flex:none;width:26px;height:26px;border-radius:7px;background:#f0f1f7;display:grid;place-items:center;font-weight:800;font-size:.82rem;color:var(--soft)}
+  .opt.correct{border-color:var(--ok);background:var(--ok-soft)}
+  .opt.correct .k{background:var(--ok);color:#fff}
+  .opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+  .opt.wrong .k{background:var(--bad);color:#fff}
+  .opt:disabled{cursor:default}
+  .why{margin-top:12px;font-size:.9rem;background:#f6f7fb;border-radius:10px;padding:11px 13px;display:none}
+  .why.show{display:block}
+  .why b{color:var(--accent)}
+  .foot{text-align:center;color:var(--soft);font-size:.76rem;margin-top:24px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>Vektereksamen<small>Les → test deg selv → quiz. Det er testingen som fester det.</small></h1>
+    <div class="tabs">
+      <button data-tab="les" class="active">Les</button>
+      <button data-tab="kort">Kort</button>
+      <button data-tab="quiz">Quiz</button>
+      <button data-tab="narko">Narko</button>
+      <button data-tab="brann">Brann</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ LES ============ -->
+  <section id="les" class="view on">
+    <details open>
+      <summary><span class="n">1</span> Narkotika — tre grupper <span class="chev">›</span></summary>
+      <div class="body">
+        <table>
+          <tr><th>Gruppe</th><th>Eksempler</th><th>Tegn</th></tr>
+          <tr><td><b>Dempende</b><br><span class="note">minusdop</span></td><td>Opioider (heroin, morfin, fentanyl, metadon), GHB, benzodiazepiner, sovemedisiner, alkohol</td><td>sløv, treg, dårlig balanse, <mark>små pupiller</mark></td></tr>
+          <tr><td><b>Stimulerende</b><br><span class="note">plussdop</span></td><td>Kokain, amfetamin, metamfetamin</td><td>rastløs, høy energi/puls, <mark>store pupiller</mark></td></tr>
+          <tr><td><b>Hallusinogene</b></td><td>LSD, fleinsopp, cannabis, hasj, marijuana, ketamin, PCP</td><td>endret virkelighet, hallusinasjoner, <mark>store pupiller</mark></td></tr>
+        </table>
+        <div class="key"><span class="t">Avslører</span><mark>Små</mark> pupiller = dempende/opioider. <mark>Store</mark> pupiller = stimulerende og hallusinogener. Opioidoverdose: små pupiller + langsom pust (motgift: nalokson).</div>
+        <p class="note"><b>Minusdop</b> = dempende, <b>plussdop</b> = stimulerende. <b>MDMA/ecstasy</b> = stimulerende <b>og</b> hallusinogen. <b>Cannabis</b> = hallusinogen med dempende effekt. <b>Ketamin/PCP</b> = hallusinogene/dissosiative. <b>Poppers</b> = egen gruppe (inhalanter).</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="n">2</span> Brannklasser & slokking <span class="chev">›</span></summary>
+      <div class="body">
+        <table>
+          <tr><th>Klasse</th><th>Brenner i</th><th>Slokk</th></tr>
+          <tr><td><b>A</b></td><td>tre, papir, plast</td><td>vann, skum, pulver</td></tr>
+          <tr><td><b>B</b></td><td>bensin, olje, maling</td><td>skum, CO₂, pulver</td></tr>
+          <tr><td><b>C</b></td><td>gass (propan, butan)</td><td>pulver</td></tr>
+          <tr><td><b>D</b></td><td>metaller</td><td>spesialpulver</td></tr>
+          <tr><td><b>E</b></td><td>elektrisk</td><td>CO₂, pulver</td></tr>
+          <tr><td><b>F</b></td><td>fett, frityr</td><td>klasse F / lokk</td></tr>
+        </table>
+        <div class="key"><span class="t">Avslører</span><mark>Vann kun på klasse A.</mark> <span class="never">Aldri vann på B, D, E, F.</span></div>
+        <table>
+          <tr><th>Slokkemiddel</th><th>Slokker klasse</th></tr>
+          <tr><td><b>Vann</b></td><td>A</td></tr>
+          <tr><td><b>Skum</b></td><td>A, B</td></tr>
+          <tr><td><b>CO₂</b></td><td>B, E (trygt på elektrisk)</td></tr>
+          <tr><td><b>Pulver (ABC)</b></td><td>A, B, C</td></tr>
+          <tr><td><b>Metall-/spesialpulver</b></td><td>D</td></tr>
+          <tr><td><b>Klasse F-slokker</b></td><td>F (fett)</td></tr>
+        </table>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="n">3</span> Brannskader & røyk <span class="chev">›</span></summary>
+      <div class="body">
+        <table>
+          <tr><th>Grad</th><th>Utseende</th><th>Tiltak</th></tr>
+          <tr><td><b>1</b></td><td>rød, ingen blemmer</td><td>hjemme</td></tr>
+          <tr><td><b>2</b></td><td><mark>blemmer</mark>, fuktig</td><td>lege</td></tr>
+          <tr><td><b>3</b></td><td>hvit/brun/svart, <mark>smertefri</mark></td><td class="never">113</td></tr>
+        </table>
+        <div class="key"><span class="t">Avslører</span>Blemmer = 2. grad. 3. grad smertefri (nerver ødelagt). Farligste røykgass = <mark>CO</mark> (luktfri, dødelig).</div>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="n">4</span> Straffbarhet & tilregnelighet <span class="chev">›</span></summary>
+      <div class="body">
+        <p><b>Fire vilkår</b> (mangler ett → ikke straffbart):</p>
+        <ol class="c">
+          <li>Lovhjemmel (Grl § 96)</li>
+          <li>Tilregnelighet (§ 20)</li>
+          <li>Skyld (forsett/uaktsomhet)</li>
+          <li>Ingen straffrihetsgrunn</li>
+        </ol>
+        <p class="note"><b>Ikke tilregnelig (§ 20):</b> under <mark>15 år</mark>, psykotisk, sterk utviklingshemming, sterk bevissthetsforstyrrelse.</p>
+        <div class="key"><span class="t">Legalitetsprinsippet</span><mark>Ingen straff/inngrep uten hjemmel i lov</mark> (Grl § 96).</div>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="n">5</span> Straffrihet & pågripelse <span class="chev">›</span></summary>
+      <div class="body">
+        <table>
+          <tr><th>Grunn</th><th>§</th><th>Når</th></tr>
+          <tr><td>Nødrett</td><td class="par">§ 17</td><td>redde fra <b>fare</b></td></tr>
+          <tr><td>Nødverge</td><td class="par">§ 18</td><td>avverge <b>angrep</b></td></tr>
+          <tr><td>Selvtekt</td><td class="par">§ 19</td><td>ta tilbake / gjenopprette</td></tr>
+          <tr><td>Samtykke</td><td class="par">§ 276*</td><td>personen sa ja</td></tr>
+        </table>
+        <div class="key"><span class="t">Avslører</span><mark>Nødverge KUN mens angrepet pågår.</mark> Eksess (for mye makt) er straffbart.</div>
+        <p class="note"><b>Sivil pågripelse (strpl § 176):</b> fersk gjerning · straffbart · fare ved opphold · forholdsmessig. Varsle politiet straks.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="n">6</span> EMK & hjemmel <span class="chev">›</span></summary>
+      <div class="body">
+        <table>
+          <tr><th>EMK</th><th>Rett</th></tr>
+          <tr><td><b>2</b></td><td>liv</td></tr>
+          <tr><td><b>3</b></td><td>tortur — <mark>absolutt forbud</mark></td></tr>
+          <tr><td><b>5</b></td><td>frihet</td></tr>
+          <tr><td><b>8</b></td><td>privatliv</td></tr>
+          <tr><td><b>14</b></td><td>diskrimineringsforbud</td></tr>
+        </table>
+        <p class="note"><b>4 hjemmelsgrunnlag:</b> avtale/samtykke · eierrådighet · lovbestemmelse · alminnelig handlefrihet.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="n">7</span> Alkohol <span class="chev">›</span></summary>
+      <div class="body">
+        <table>
+          <tr><th>Gruppe</th><th>Styrke</th><th>Alder</th></tr>
+          <tr><td>1 — øl</td><td>&lt; 4,7 %</td><td><mark>18</mark></td></tr>
+          <tr><td>2 — vin</td><td>4,7–22 %</td><td><mark>18</mark></td></tr>
+          <tr><td>3 — brennevin</td><td>≥ 22 %</td><td><mark>20</mark></td></tr>
+        </table>
+        <div class="key"><span class="t">Avslører</span><mark>Under 22 % → 18 år. Brennevin → 20 år.</mark></div>
+        <p class="note">Skjenking: gr. 1–2 kl. 06–03 · brennevin 13–03. Forbudt å skjenke <b>åpenbart beruset</b>.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="n">8</span> Arbeidstid & ABCDE <span class="chev">›</span></summary>
+      <div class="body">
+        <table>
+          <tr><th>Tema</th><th>§</th><th>Grense</th></tr>
+          <tr><td>Arbeidstid</td><td class="par">10-4</td><td><mark>9 t/dag · 40 t/uke</mark></td></tr>
+          <tr><td>Overtid</td><td class="par">10-6</td><td><mark>10 t/uke</mark> · 25 t/4 uker · 200 t/år</td></tr>
+          <tr><td>Arbeidsfri</td><td class="par">10-8</td><td><mark>11 t/døgn · 35 t/uke</mark></td></tr>
+          <tr><td>Natt</td><td class="par">10-11</td><td><mark>21–06</mark></td></tr>
+          <tr><td>AMU</td><td class="par">7-1</td><td>≥ 30 ansatte</td></tr>
+        </table>
+        <p class="note"><b>ABCDE:</b> Airway (luftvei) · Breathing (pust) · Circulation (blødning) · Disability (bevissthet) · Exposure (undersøk). Egensikkerhet først.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ KORT ============ -->
+  <section id="kort" class="view">
+    <div class="meta"><span id="k-count"></span><span id="k-score"></span></div>
+    <div class="prog"><span id="k-bar"></span></div>
+    <div id="k-play">
+      <div class="flash"><div class="flip" id="k-flip">
+        <div class="face front"><span class="lbl">Spørsmål</span><div class="q" id="k-q"></div></div>
+        <div class="face back"><span class="lbl">Svar</span><div class="a" id="k-a"></div></div>
+      </div></div>
+      <p class="hint" id="k-hint">Trykk på kortet for å se svaret</p>
+      <div class="row2">
+        <button class="btn again" id="k-again" disabled>Øv mer</button>
+        <button class="btn know" id="k-know" disabled>Kunne det</button>
+      </div>
+    </div>
+    <div id="k-done" class="center" style="display:none"></div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section id="quiz" class="view">
+    <div class="meta"><span id="q-count"></span><span id="q-score"></span></div>
+    <div class="prog"><span id="q-bar"></span></div>
+    <div id="q-play">
+      <div class="q-card">
+        <p class="q-text" id="q-text"></p>
+        <div class="opts" id="q-opts"></div>
+        <div class="why" id="q-why"></div>
+      </div>
+      <button class="btn primary" id="q-next" style="display:none">Neste →</button>
+    </div>
+    <div id="q-done" class="center" style="display:none"></div>
+  </section>
+
+  <!-- ============ NARKO ============ -->
+  <section id="narko" class="view">
+    <p style="font-size:.85rem;color:var(--soft);margin:0 0 12px">Kategoriser stoffet. De du bommer på kommer tilbake til du kan alle.</p>
+    <div class="meta"><span id="n-count"></span><span id="n-score"></span></div>
+    <div class="prog"><span id="n-bar"></span></div>
+    <div id="n-play">
+      <div class="q-card">
+        <p class="q-text" id="n-text"></p>
+        <div class="opts" id="n-opts"></div>
+        <div class="why" id="n-why"></div>
+      </div>
+      <button class="btn primary" id="n-next" style="display:none">Neste →</button>
+    </div>
+    <div id="n-done" class="center" style="display:none"></div>
+  </section>
+
+  <!-- ============ BRANN ============ -->
+  <section id="brann" class="view">
+    <p style="font-size:.85rem;color:var(--soft);margin:0 0 12px">Riktig slokkemiddel til riktig klasse. De du bommer på kommer tilbake.</p>
+    <div class="meta"><span id="b-count"></span><span id="b-score"></span></div>
+    <div class="prog"><span id="b-bar"></span></div>
+    <div id="b-play">
+      <div class="q-card">
+        <p class="q-text" id="b-text"></p>
+        <div class="opts" id="b-opts"></div>
+        <div class="why" id="b-why"></div>
+      </div>
+      <button class="btn primary" id="b-next" style="display:none">Neste →</button>
+    </div>
+    <div id="b-done" class="center" style="display:none"></div>
+  </section>
+
+  <p class="foot">Til eget bruk. Les alltid mot oppdatert pensum og lovtekst.</p>
+</main>
+
+<script>
+  const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+  const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;};
+
+  /* ---- tabs ---- */
+  $$(".tabs button").forEach(b=>b.onclick=()=>{
+    $$(".tabs button").forEach(x=>x.classList.toggle("active",x===b));
+    $$(".view").forEach(v=>v.classList.toggle("on",v.id===b.dataset.tab));
+    if(b.dataset.tab==="kort"&&!kStarted)startCards();
+    if(b.dataset.tab==="quiz"&&!qStarted)startQuiz();
+    if(b.dataset.tab==="narko"&&!nStarted)startNarko();
+    if(b.dataset.tab==="brann"&&!bStarted)startBrann();
+    window.scrollTo({top:0});
+  });
+
+  /* ---- flashcards ---- */
+  const CARDS=[
+    ["Små pupiller + langsom pust + sløv?","Opiat-/opioidoverdose (motgift: nalokson)"],
+    ["Store pupiller, oppstemt, urolig?","Sentralstimulerende"],
+    ["Hvilken gruppe: GHB/GBL?","Sentraldempende"],
+    ["Hvilken gruppe: MDMA / ecstasy?","Både stimulerende og hallusinogent"],
+    ["Hva betyr minusdop og plussdop?","Minusdop = dempende · plussdop = stimulerende"],
+    ["Hvilken gruppe: ketamin og PCP?","Hallusinogene / dissosiative"],
+    ["Hva er poppers (nitritter)?","Egen gruppe: inhalanter"],
+    ["Hvilken gruppe: LSD og fleinsopp?","Hallusinogene"],
+    ["Vann kan brukes på hvilken brannklasse?","Kun klasse A"],
+    ["Fett/frityr er hvilken brannklasse?","Klasse F (aldri vann)"],
+    ["Elektrisk brann — slokk med?","CO₂ eller pulver (aldri vann)"],
+    ["Blemmer på huden = hvilken brannskadegrad?","2. grad"],
+    ["Brannskade som er smertefri = hvilken grad?","3. grad (nerveendene ødelagt)"],
+    ["Farligste røykgass?","CO — karbonmonoksid (luktfri, dødelig)"],
+    ["Hvor mange straffbarhetsvilkår?","Fire (mangler ett → ikke straffbart)"],
+    ["Nødrett er straffeloven §?","§ 17"],
+    ["Nødverge er straffeloven §?","§ 18"],
+    ["Selvtekt er straffeloven §?","§ 19"],
+    ["Når gjelder nødverge?","Kun mens angrepet pågår"],
+    ["Tilregnelighet er straffeloven §?","§ 20"],
+    ["Sivil pågripelse er straffeprosessloven §?","§ 176"],
+    ["Aldersgrense brennevin (≥22 %)?","20 år"],
+    ["Aldersgrense øl og vin (<22 %)?","18 år"],
+    ["Alminnelig arbeidstid per uke?","40 timer (9 t/dag)"],
+    ["Maks overtid per uke (lovens grense)?","10 timer (25 per 4 uker, 200 per år)"],
+    ["Nattarbeid er mellom hvilke klokkeslett?","21:00 – 06:00"],
+    ["Daglig arbeidsfri (sammenhengende)?","Minst 11 timer"],
+    ["EMK art. 3 (tortur) — hvor absolutt?","Absolutt forbud, ingen unntak"],
+    ["Legalitetsprinsippet sier?","Ingen straff/inngrep uten hjemmel i lov (Grl § 96)"],
+  ];
+  let kDeck=[],kIdx=0,kKnow=0,kMissed=[],kFlipped=false,kStarted=false;
+  function startCards(){kStarted=true;kDeck=shuffle(CARDS);kIdx=0;kKnow=0;kMissed=[];showCard();}
+  function showCard(){
+    $("#k-play").style.display="";$("#k-done").style.display="none";
+    kFlipped=false;$("#k-flip").classList.remove("flipped");
+    $("#k-again").disabled=true;$("#k-know").disabled=true;
+    const c=kDeck[kIdx];$("#k-q").textContent=c[0];$("#k-a").textContent=c[1];
+    $("#k-count").textContent=`Kort ${kIdx+1} av ${kDeck.length}`;
+    $("#k-score").textContent=`${kKnow} kunne`;
+    $("#k-bar").style.width=(kIdx/kDeck.length*100)+"%";
+    $("#k-hint").style.visibility="visible";
+  }
+  $("#k-flip").onclick=()=>{kFlipped=!kFlipped;$("#k-flip").classList.toggle("flipped",kFlipped);
+    $("#k-again").disabled=!kFlipped;$("#k-know").disabled=!kFlipped;
+    if(kFlipped)$("#k-hint").style.visibility="hidden";};
+  $("#k-know").onclick=()=>{if(!kFlipped)return;kKnow++;nextCard();};
+  $("#k-again").onclick=()=>{if(!kFlipped)return;kMissed.push(kDeck[kIdx]);nextCard();};
+  function nextCard(){
+    if(kIdx+1<kDeck.length){kIdx++;showCard();return;}
+    if(kMissed.length){kDeck=shuffle(kMissed);kMissed=[];kIdx=0;showCard();return;}
+    $("#k-bar").style.width="100%";$("#k-play").style.display="none";
+    const d=$("#k-done");d.style.display="";
+    d.innerHTML=`<div class="big">✓</div><p style="font-weight:700;font-size:1.1rem;margin:6px 0">Alle kort sitter!</p>
+      <p style="color:var(--soft)">Du gikk gjennom til du kunne hvert kort.</p>
+      <button class="btn primary" style="margin-top:14px" onclick="startCards()">Kjør på nytt</button>`;
+  }
+
+  /* ---- quiz ---- */
+  const QUIZ=[
+    ["Du finner en person med langsom pust og veldig små pupiller. Hva tyder det på?",
+      ["Overdose amfetamin","Overdose opiat (heroin)","Overdose alkohol","Rus av LSD"],1,
+      "Små «knappenålspupiller» + langsom pust = opioid-/opiatoverdose. Motgift: nalokson."],
+    ["En person er oppstemt, urolig og har store, utvidede pupiller. Hvilken gruppe?",
+      ["Sentraldempende","Opioider","Sentralstimulerende","Inhalanter"],2,
+      "Store pupiller + oppstemt = sentralstimulerende (amfetamin, kokain, MDMA)."],
+    ["Hvilken gruppe tilhører GHB?",
+      ["Sentralstimulerende","Sentraldempende","Hallusinogene","Opioider"],1,
+      "GHB/GBL er sentraldempende — gir sløvhet og kan gi bevisstløshet."],
+    ["MDMA (ecstasy) regnes som?",
+      ["Kun dempende","Kun opioid","Stimulerende og hallusinogent","Kun beroligende"],2,
+      "MDMA/ecstasy er både stimulerende og hallusinogent."],
+    ["Hvilken brannklasse kan slokkes med vann?",
+      ["Klasse F","Klasse E","Klasse A","Klasse B"],2,
+      "Vann kun på klasse A. Aldri på B (væske), D (metall), E (elektrisk), F (fett)."],
+    ["Brann i frityrfett — hvilken klasse?",
+      ["Klasse A","Klasse B","Klasse F","Klasse C"],2,
+      "Fett og matolje = klasse F. Aldri vann — det gir en eksplosiv dampbombe."],
+    ["Du ser blemmer og fuktig, rød hud. Hvilken brannskadegrad?",
+      ["1. grad","2. grad","3. grad","Overflatisk"],1,
+      "Blemmer = 2. grad. Krever medisinsk vurdering."],
+    ["En brannskade er hvit og smertefri. Hvorfor smertefri?",
+      ["Det er 1. grad","Nerveendene er ødelagt (3. grad)","Huden er kald","Pasienten er i sjokk"],1,
+      "3. grad er ofte smertefri fordi nerveendene er ødelagt. Ring 113."],
+    ["Hva dør de fleste av i en brann?",
+      ["Flammene","Røyken (bl.a. CO)","Varmen","Fallskader"],1,
+      "De fleste dør av røykforgiftning. Farligst er CO — luktfri og dødelig."],
+    ["Hvor mange vilkår må være oppfylt for at noe er straffbart?",
+      ["To","Tre","Fire","Fem"],2,
+      "Fire: lovhjemmel, tilregnelighet, skyld, ingen straffrihetsgrunn. Mangler ett → ikke straffbart."],
+    ["Nødverge er hjemlet i straffeloven §?",
+      ["§ 17","§ 18","§ 19","§ 176"],1,
+      "§ 18 nødverge. (§ 17 nødrett, § 19 selvtekt.)"],
+    ["Selvtekt er straffeloven §?",
+      ["§ 17","§ 18","§ 19","§ 20"],2,
+      "§ 19 selvtekt — gjenopprette en ulovlig endret tilstand."],
+    ["Når har du lov til å bruke nødverge?",
+      ["Etter at angrepet er over, som straff","Kun mens angrepet pågår/er overhengende","Når som helst mot en tyv","Bare hvis politiet sier ja"],1,
+      "Kun mens angrepet pågår eller er overhengende. Hevn/straff er aldri lov."],
+    ["Sivil pågripelse er hjemlet i?",
+      ["Straffeloven § 176","Straffeprosessloven § 176","Politiloven § 7","Grunnloven § 96"],1,
+      "Straffeprosessloven § 176 — ved fersk gjerning og fare ved opphold."],
+    ["Aldersgrense for å bli skjenket brennevin (22 % og over)?",
+      ["18 år","20 år","21 år","23 år"],1,
+      "Brennevin (gruppe 3, ≥22 %) → 20 år. Øl og vin (<22 %) → 18 år."],
+    ["Maks alminnelig arbeidstid per uke etter aml?",
+      ["37,5 timer","40 timer","45 timer","48 timer"],1,
+      "40 t/uke er lovens grense (9 t/dag). Tariff gir ofte 37,5 t."],
+    ["Nattarbeid er definert som arbeid mellom?",
+      ["22:00–07:00","20:00–06:00","21:00–06:00","23:00–05:00"],2,
+      "Nattarbeid: kl. 21:00–06:00. Tillatt for vektere fordi arbeidets art krever det."],
+    ["Maks overtid per uke etter loven?",
+      ["10 timer","20 timer","25 timer","40 timer"],0,
+      "10 t/uke er lovens grense. 25 t gjelder per 4 uker, 200 t per år."],
+    ["EMK artikkel 3 (forbud mot tortur) er?",
+      ["Kan fravikes i nødstilfeller","Absolutt — ingen unntak","Bare for politiet","Kun ved pågripelse"],1,
+      "Art. 3 er et absolutt forbud — ingen unntak, uansett situasjon."],
+    ["Legalitetsprinsippet betyr?",
+      ["Alle er like for loven","Ingen straff/inngrep uten hjemmel i lov","Uskyldig til det motsatte er bevist","Retten til forsvarer"],1,
+      "Legalitetsprinsippet (Grl § 96): ingen straff eller inngrep uten lovhjemmel."],
+    ["Hvem er IKKE strafferettslig tilregnelig (§ 20)?",
+      ["Alle over 18 år","Barn under 15 år","Førstegangslovbrytere","Berusede personer"],1,
+      "Ikke tilregnelig: under 15 år, psykotisk, sterk utviklingshemming, sterk bevissthetsforstyrrelse."],
+  ];
+  let qDeck=[],qIdx=0,qScore=0,qWrong=[],qStarted=false,qAnswered=false;
+  function startQuiz(){qStarted=true;qDeck=shuffle(QUIZ);qIdx=0;qScore=0;qWrong=[];showQ();}
+  function showQ(){
+    $("#q-play").style.display="";$("#q-done").style.display="none";
+    qAnswered=false;const item=qDeck[qIdx];
+    $("#q-count").textContent=`Spørsmål ${qIdx+1} av ${qDeck.length}`;
+    $("#q-score").textContent=`${qScore} riktige`;
+    $("#q-bar").style.width=(qIdx/qDeck.length*100)+"%";
+    $("#q-text").textContent=item[0];
+    const why=$("#q-why");why.className="why";why.innerHTML="";
+    $("#q-next").style.display="none";
+    $("#q-next").textContent=qIdx+1<qDeck.length?"Neste →":"Se resultat →";
+    const box=$("#q-opts");box.innerHTML="";
+    item[1].forEach((opt,i)=>{
+      const b=document.createElement("button");b.className="opt";
+      b.innerHTML=`<span class="k">${String.fromCharCode(65+i)}</span><span>${opt}</span>`;
+      b.onclick=()=>answer(i,b);box.appendChild(b);
+    });
+  }
+  function answer(i,btn){
+    if(qAnswered)return;qAnswered=true;
+    const item=qDeck[qIdx],correct=item[2];
+    $$("#q-opts .opt").forEach((b,idx)=>{b.disabled=true;
+      if(idx===correct)b.classList.add("correct");
+      if(idx===i&&i!==correct)b.classList.add("wrong");});
+    if(i===correct)qScore++;else qWrong.push(item);
+    const why=$("#q-why");why.classList.add("show");
+    why.innerHTML=`<b>${i===correct?"✓ Riktig.":"✗ Feil."}</b> ${item[3]}`;
+    $("#q-score").textContent=`${qScore} riktige`;
+    $("#q-next").style.display="";$("#q-next").scrollIntoView({behavior:"smooth",block:"nearest"});
+  }
+  $("#q-next").onclick=()=>{
+    if(qIdx+1<qDeck.length){qIdx++;showQ();return;}
+    qDone();
+  };
+  function qDone(){
+    $("#q-bar").style.width="100%";$("#q-play").style.display="none";
+    const pct=Math.round(qScore/qDeck.length*100),d=$("#q-done");d.style.display="";
+    const msg=pct>=80?"Sterkt! Dette sitter.":pct>=50?"På god vei — kjør de du bommet på.":"Repeter og prøv igjen.";
+    d.innerHTML=`<div class="big">${pct}%</div><p style="font-weight:700;font-size:1.1rem;margin:6px 0">${qScore} av ${qDeck.length} riktig</p>
+      <p style="color:var(--soft)">${msg}</p>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:16px">
+        ${qWrong.length?`<button class="btn again" onclick="retryWrong()">Øv på de ${qWrong.length} du bommet på</button>`:""}
+        <button class="btn primary" onclick="startQuiz()">Ny runde</button>
+      </div>`;
+  }
+  function retryWrong(){qDeck=shuffle(qWrong);qIdx=0;qScore=0;qWrong=[];showQ();}
+
+  /* ---- narko: kategoriseringsquiz ---- */
+  const NCATS=["Dempende","Stimulerende","Hallusinogen","Både stim. + halluc."];
+  const NEXPL={
+    "Dempende":"Minusdop — senker aktivitet (sløv, treg, små pupiller).",
+    "Stimulerende":"Plussdop — øker aktivitet (rastløs, store pupiller, høy puls).",
+    "Hallusinogen":"Endrer sanser og virkelighetsoppfatning.",
+    "Både stim. + halluc.":"Ecstasy/MDMA er både stimulerende og hallusinogent."
+  };
+  const NARKO=[
+    ["Heroin","Dempende"],["Morfin","Dempende"],["Fentanyl","Dempende","Sterkt opioid."],
+    ["Metadon","Dempende","Opioid."],["GHB","Dempende"],["Benzodiazepiner","Dempende"],
+    ["Sovemedisiner","Dempende"],["Alkohol","Dempende"],
+    ["Kokain","Stimulerende"],["Amfetamin","Stimulerende"],["Metamfetamin","Stimulerende","Sterkt stimulerende."],
+    ["LSD","Hallusinogen"],["Fleinsopp","Hallusinogen"],
+    ["Cannabis","Hallusinogen","Hallusinogen med dempende effekt."],
+    ["Hasj","Hallusinogen","Cannabisprodukt."],["Marijuana","Hallusinogen","Cannabisprodukt."],
+    ["Ketamin","Hallusinogen","Hallusinogent/dissosiativt."],["PCP","Hallusinogen","Hallusinogent/dissosiativt."],
+    ["Ecstasy / MDMA","Både stim. + halluc."],
+  ];
+  let nDeck=[],nIdx=0,nScore=0,nWrong=[],nStarted=false,nAns=false;
+  function startNarko(){nStarted=true;nDeck=shuffle(NARKO);nIdx=0;nScore=0;nWrong=[];showN();}
+  function showN(){
+    $("#n-play").style.display="";$("#n-done").style.display="none";nAns=false;
+    const it=nDeck[nIdx],opts=shuffle(NCATS),correct=opts.indexOf(it[1]);
+    nDeck[nIdx]._opts=opts;nDeck[nIdx]._c=correct;
+    $("#n-count").textContent=`${nIdx+1} av ${nDeck.length}`;
+    $("#n-score").textContent=`${nScore} riktige`;
+    $("#n-bar").style.width=(nIdx/nDeck.length*100)+"%";
+    $("#n-text").textContent=`${it[0]} — hvilken kategori?`;
+    const why=$("#n-why");why.className="why";why.innerHTML="";
+    $("#n-next").style.display="none";$("#n-next").textContent=nIdx+1<nDeck.length?"Neste →":"Se resultat →";
+    const box=$("#n-opts");box.innerHTML="";
+    opts.forEach((opt,i)=>{const b=document.createElement("button");b.className="opt";
+      b.innerHTML=`<span class="k">${String.fromCharCode(65+i)}</span><span>${opt}</span>`;
+      b.onclick=()=>nAnswer(i,b);box.appendChild(b);});
+  }
+  function nAnswer(i,btn){
+    if(nAns)return;nAns=true;const it=nDeck[nIdx],correct=it._c;
+    $$("#n-opts .opt").forEach((b,idx)=>{b.disabled=true;
+      if(idx===correct)b.classList.add("correct");
+      if(idx===i&&i!==correct)b.classList.add("wrong");});
+    if(i===correct)nScore++;else nWrong.push([it[0],it[1],it[2]]);
+    const why=$("#n-why");why.classList.add("show");
+    why.innerHTML=`<b>${i===correct?"✓ Riktig.":"✗ Feil — "+it[1]+"."}</b> ${NEXPL[it[1]]}${it[2]?" "+it[2]:""}`;
+    $("#n-score").textContent=`${nScore} riktige`;
+    $("#n-next").style.display="";$("#n-next").scrollIntoView({behavior:"smooth",block:"nearest"});
+  }
+  $("#n-next").onclick=()=>{
+    if(nIdx+1<nDeck.length){nIdx++;showN();return;}
+    if(nWrong.length){nDeck=shuffle(nWrong);nWrong=[];nIdx=0;nScore=0;showN();return;}
+    $("#n-bar").style.width="100%";$("#n-play").style.display="none";
+    const d=$("#n-done");d.style.display="";
+    d.innerHTML=`<div class="big">✓</div><p style="font-weight:700;font-size:1.1rem;margin:6px 0">Alle stoffene sitter!</p>
+      <p style="color:var(--soft)">Du gikk gjennom til du kategoriserte hvert stoff riktig.</p>
+      <button class="btn primary" style="margin-top:14px" onclick="startNarko()">Kjør på nytt</button>`;
+  };
+
+  /* ---- brann: riktig slokkemiddel ---- */
+  const BRANN=[
+    ["Hvilken brannklasse kan slokkes med vann?",["Klasse A","Klasse B","Klasse E","Klasse F"],0,"Vann kun på klasse A."],
+    ["Brann i frityrfett (klasse F) — hva bruker du?",["Vann","Klasse F-slokker eller lokk","Vann og skum","Kaldt vann"],1,"Aldri vann på fett — det gir en eksplosiv dampbombe."],
+    ["Brann i elektrisk utstyr (E) — hva er trygt?",["Vann","CO₂ eller pulver","Skum","Vann med trykk"],1,"Aldri vann på elektrisk (støt). CO₂ etterlater ingen rester."],
+    ["Brann i metall (klasse D) — hva må du bruke?",["Vann","Skum","Metall-/spesialpulver","CO₂"],2,"Metaller krever spesialpulver — aldri vann."],
+    ["Hva skal du ALDRI bruke på brann i bensin/olje (B)?",["Skum","CO₂","Pulver","Vann"],3,"Aldri vann på væskebrann — brannen sprer seg."],
+    ["ABC-pulver dekker hvilke klasser?",["Kun A","A og B","A, B og C","Alle A–F"],2,"ABC-pulver = klasse A, B og C."],
+    ["Hvilket slokkemiddel er trygt på elektrisk og etterlater ingen rester?",["Skum","Vann","CO₂","ABC-pulver"],2,"CO₂ er trygt på elektrisk (E) og setter ingen spor."],
+    ["Skum egner seg for hvilke klasser?",["Kun A","A og B","B og E","Kun F"],1,"Skum dekker A og B."],
+    ["Brann i propan/gass (klasse C) — hva bruker du?",["Vann","Pulver (og steng gassen)","Skum","Klasse F-slokker"],1,"Pulver for gass — og steng gasstilførselen."],
+    ["Hvilke klasser skal ALDRI ha vann?",["Kun A","B, D, E og F","Kun E","Alle klasser"],1,"Aldri vann på B (væske), D (metall), E (elektrisk), F (fett)."],
+    ["Klasse F-slokker er laget for?",["Metaller","Elektrisk utstyr","Fett og matolje","Gass"],2,"Klasse F = fett/frityr, påbudt i mange storkjøkken."],
+    ["Brann i tre og papir (A) — hva kan du bruke?",["Kun klasse F","Vann, skum eller pulver","Kun CO₂","Metallpulver"],1,"Klasse A: vann, skum eller pulver."],
+  ];
+  let bDeck=[],bIdx=0,bScore=0,bWrong=[],bStarted=false,bAns=false;
+  function startBrann(){bStarted=true;bDeck=shuffle(BRANN);bIdx=0;bScore=0;bWrong=[];showB();}
+  function showB(){
+    $("#b-play").style.display="";$("#b-done").style.display="none";bAns=false;
+    const it=bDeck[bIdx];
+    $("#b-count").textContent=`${bIdx+1} av ${bDeck.length}`;
+    $("#b-score").textContent=`${bScore} riktige`;
+    $("#b-bar").style.width=(bIdx/bDeck.length*100)+"%";
+    $("#b-text").textContent=it[0];
+    const why=$("#b-why");why.className="why";why.innerHTML="";
+    $("#b-next").style.display="none";$("#b-next").textContent=bIdx+1<bDeck.length?"Neste →":"Se resultat →";
+    const box=$("#b-opts");box.innerHTML="";
+    it[1].forEach((opt,i)=>{const btn=document.createElement("button");btn.className="opt";
+      btn.innerHTML=`<span class="k">${String.fromCharCode(65+i)}</span><span>${opt}</span>`;
+      btn.onclick=()=>bAnswer(i,btn);box.appendChild(btn);});
+  }
+  function bAnswer(i,btn){
+    if(bAns)return;bAns=true;const it=bDeck[bIdx],correct=it[2];
+    $$("#b-opts .opt").forEach((el,idx)=>{el.disabled=true;
+      if(idx===correct)el.classList.add("correct");
+      if(idx===i&&i!==correct)el.classList.add("wrong");});
+    if(i===correct)bScore++;else bWrong.push(it);
+    const why=$("#b-why");why.classList.add("show");
+    why.innerHTML=`<b>${i===correct?"✓ Riktig.":"✗ Feil."}</b> ${it[3]}`;
+    $("#b-score").textContent=`${bScore} riktige`;
+    $("#b-next").style.display="";$("#b-next").scrollIntoView({behavior:"smooth",block:"nearest"});
+  }
+  $("#b-next").onclick=()=>{
+    if(bIdx+1<bDeck.length){bIdx++;showB();return;}
+    if(bWrong.length){bDeck=shuffle(bWrong);bWrong=[];bIdx=0;bScore=0;showB();return;}
+    $("#b-bar").style.width="100%";$("#b-play").style.display="none";
+    const d=$("#b-done");d.style.display="";
+    d.innerHTML=`<div class="big">✓</div><p style="font-weight:700;font-size:1.1rem;margin:6px 0">Slokkemidlene sitter!</p>
+      <p style="color:var(--soft)">Du kan riktig middel til hver klasse.</p>
+      <button class="btn primary" style="margin-top:14px" onclick="startBrann()">Kjør på nytt</button>`;
+  };
+</script>
+</body>
+</html>
