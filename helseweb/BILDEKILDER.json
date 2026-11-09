@@ -1,0 +1,410 @@
+[
+  {
+    "file": "locobase-repair100.jpg",
+    "url": "https://www.farmasiet.no/images/locobase-repair-krem,54160_925981.png?width=404&height=404&rmode=Max&quality=99&crop=1066,241,1950,2758&format=jpeg"
+  },
+  {
+    "file": "locobase-protect100.webp",
+    "url": "https://www.farmasiet.no/images/locobase-protect-krem2,43149_925982.png?width=404&height=404&rmode=Max&quality=99&crop=1015,245,1980,2767&format=jpeg"
+  },
+  {
+    "file": "locobase-renew100.webp",
+    "url": "https://www.farmasiet.no/images/locobase-renew-krem,32547_943641.png?width=404&height=404&rmode=Max&quality=99&crop=880,394,2112,3620&format=jpeg"
+  },
+  {
+    "file": "locobase-repair30.webp",
+    "url": "https://www.farmasiet.no/images/locobase-repair-krem2,54158_991162.png?width=404&height=404&rmode=Max&quality=99&crop=1067,245,1949,2759&format=jpeg"
+  },
+  {
+    "file": "locobase-protect350.webp",
+    "url": "https://www.farmasiet.no/images/locobase-protect-krem,54146_927714.png?width=404&height=404&rmode=Max&quality=99&crop=266,258,2997,2764&format=jpeg"
+  },
+  {
+    "file": "locobase-light100.webp",
+    "url": "https://www.farmasiet.no/images/locobase-repair-light-cream2,52533_1213107.png?width=404&height=404&rmode=Max&quality=99&crop=1100,243,1900,2755&format=jpeg"
+  },
+  {
+    "file": "sana-multivitamin.webp",
+    "url": "https://www.farmasiet.no/images/sana-sol-multivitamin,34024_1166280.png?width=404&height=404&rmode=Max&quality=99&crop=706,221,2292,3755&format=jpeg"
+  },
+  {
+    "file": "sana-hals-pastiller.webp",
+    "url": "https://www.farmasiet.no/images/sana-sol-hoste--hals-halspastiller,54128_1213562.png?width=404&height=404&rmode=Max&quality=99&crop=223,669,2777,2330&format=jpeg"
+  },
+  {
+    "file": "sana-sugetabletter.jpg",
+    "url": "https://www.farmasiet.no/images/sana-sol-sar-hals-sugetabletter,54129_1213561.png?width=404&height=404&rmode=Max&quality=99&crop=221,931,2781,2067&format=jpeg"
+  },
+  {
+    "file": "mepilex-border75.webp",
+    "url": "https://www.farmasiet.no/images/mepilex-border-flex-75x75cm,51567_1166535.png?width=404&height=404&rmode=Max&quality=99&crop=225,228,2774,2755&format=jpeg"
+  },
+  {
+    "file": "mepilex-lite45.webp",
+    "url": "https://www.farmasiet.no/images/mepilex-bord-flex-lite-4x5cm,51571_1204030.png?width=404&height=404&rmode=Max&quality=99&crop=251,233,2781,2770&format=jpeg"
+  },
+  {
+    "file": "mepilex-foam10.jpg",
+    "url": "https://www.farmasiet.no/images/mepilex-skumbandasje,45409_859780.png?width=404&height=404&rmode=Max&quality=99&crop=592,216,2441,2799&format=jpeg"
+  },
+  {
+    "file": "mepilex-lite10.webp",
+    "url": "https://www.farmasiet.no/images/mepilex-bord-flex-lite-10x10cm,51573_1204039.png?width=404&height=404&rmode=Max&quality=99&crop=232,226,2774,2773&format=jpeg"
+  },
+  {
+    "file": "assets/catalog-944029.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-d3-vitamin-80-g,45574_944029.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus D3-Vitamin 80 µg",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/vitaminer-og-mineraler/nycoplus-d3-vitamin-80-g,5006109"
+  },
+  {
+    "file": "assets/catalog-861414.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-hoykonsentrert-omega-3,54512_861414.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus Høykonsentrert Omega-3",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/tran-og-omegaprodukter/nycoplus-hoykonsentrert-omega-3,5001155"
+  },
+  {
+    "file": "assets/catalog-1003806.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-magnesium-350-mg,44562_1003806.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus Magnesium 350 mg",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/vitaminer-og-mineraler/nycoplus-magnesium-350-mg,5006828"
+  },
+  {
+    "file": "assets/catalog-1209218.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-multi-tabletter,45303_1209218.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus Multi tabletter",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/vitaminer-og-mineraler/nycoplus-multi-tabletter,5112865"
+  },
+  {
+    "file": "assets/catalog-1173951.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-b-kompleks-ekstra-sterk,60341_1173951.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus B-kompleks Ekstra sterk",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/vitaminer-og-mineraler/nycoplus-b-kompleks-ekstra-sterk,5034808"
+  },
+  {
+    "file": "assets/catalog-860067.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-d3-vitamin-20-g,56315_860067.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus D3-Vitamin 20 µg",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/vitaminer-og-mineraler/nycoplus-d3-vitamin-20-g,5001137"
+  },
+  {
+    "file": "assets/catalog-944018.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-d3-vitamin-40-g,42816_944018.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus D3-Vitamin 40 µg",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/vitaminer-og-mineraler/nycoplus-d3-vitamin-40-g,5006096"
+  },
+  {
+    "file": "assets/catalog-859840.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-d-vitamin-10-g,43228_859840.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus D-vitamin 10 µg",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/vitaminer-og-mineraler/nycoplus-d-vitamin-10-g,5001147"
+  },
+  {
+    "file": "assets/catalog-861426.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-hoykonsentrert-omega-3-500-mg,47120_861426.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus Høykonsentrert omega-3 500 mg",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/tran-og-omegaprodukter/nycoplus-hoykonsentrert-omega-3-500-mg,5001171"
+  },
+  {
+    "file": "assets/catalog-861777.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-folsyre-400-g,41660_861777.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus Folsyre 400 µg",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/vitaminer-og-mineraler/nycoplus-folsyre-400-g,5001524"
+  },
+  {
+    "file": "assets/catalog-860068.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-d-vitamin-draper,47131_860068.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus D-vitamin Dråper",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/vitaminer-og-mineraler/nycoplus-d-vitamin-draper,5001140"
+  },
+  {
+    "file": "assets/catalog-859898.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-b-kompleks-tabletter,47125_859898.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus B-kompleks tabletter",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/vitaminer-og-mineraler/nycoplus-b-kompleks-tabletter,5001143"
+  },
+  {
+    "file": "assets/catalog-1126620.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-c-vitamin-tab-250-mg,47107_1126620.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus C-vitamin tab 250 mg",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/vitaminer-og-mineraler/nycoplus-c-vitamin-tab-250-mg,5007702"
+  },
+  {
+    "file": "assets/catalog-992943.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-gravid-tabletter--kapsler,48707_992943.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus Gravid Tabletter + Kapsler",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/vitaminer-og-mineraler/nycoplus-gravid-tabletter--kapsler,5006714"
+  },
+  {
+    "file": "assets/catalog-896421.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-b12-vitamin-9-g,43236_896421.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus B12-vitamin 9 µg",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/vitaminer-og-mineraler/nycoplus-b12-vitamin-9-g,5005033"
+  },
+  {
+    "file": "assets/catalog-1167462.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-jern-20-mg-tabletter,46034_1167462.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus Jern 20 mg tabletter",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/vitaminer-og-mineraler/nycoplus-jern-20-mg-tabletter,5028924"
+  },
+  {
+    "file": "assets/catalog-911428.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-jod-225-g,47138_911428.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus Jod 225 µg",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/vitaminer-og-mineraler/nycoplus-jod-225-g,5005581"
+  },
+  {
+    "file": "assets/catalog-1207697.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-sink-13-mg-tabletter,45556_1207697.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus Sink 13 mg tabletter",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/vitaminer-og-mineraler/nycoplus-sink-13-mg-tabletter,5111344"
+  },
+  {
+    "file": "assets/catalog-1209257.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-omega-3-multi-kapsler2,46004_1209257.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus Omega-3 Multi kapsler",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/tran-og-omegaprodukter/nycoplus-omega-3-multi-kapsler2,5112904"
+  },
+  {
+    "file": "assets/catalog-860119.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-omega-3-basic,46286_860119.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus Omega-3 Basic",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/tran-og-omegaprodukter/nycoplus-omega-3-basic,5001168"
+  },
+  {
+    "file": "assets/catalog-865807.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-magnesium--calcium-tabletter,46035_865807.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus Magnesium + Calcium tabletter",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/vitaminer-og-mineraler/nycoplus-magnesium--calcium-tabletter,5001843"
+  },
+  {
+    "file": "assets/catalog-1209546.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-b12-vitamin-ekstra-sterk-1000-g-tyggetabletter,46294_1209546.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus B12-Vitamin Ekstra Sterk 1000 µg tyggetabletter",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/vitaminer-og-mineraler/nycoplus-b12-vitamin-ekstra-sterk-1000-g-tyggetabletter,5113193"
+  },
+  {
+    "file": "assets/catalog-978344.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-c-vitamin-1000-mg3,10324_978344.jpg?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus C-vitamin 1000 mg",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/vitaminer-og-mineraler/nycoplus-c-vitamin-1000-mg3,5006601"
+  },
+  {
+    "file": "assets/catalog-860118.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-calcium-500-mg,47129_860118.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus Calcium 500 mg",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/vitaminer-og-mineraler/nycoplus-calcium-500-mg,5001162"
+  },
+  {
+    "file": "assets/catalog-1209547.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-biotin-2500-g-tabletter,46295_1209547.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus Biotin 2500 µg tabletter",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/vitaminer-og-mineraler/nycoplus-biotin-2500-g-tabletter,5113194"
+  },
+  {
+    "file": "assets/catalog-1208739.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-multi-mann-tabletter,43130_1208739.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus Multi Mann tabletter",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/vitaminer-og-mineraler/nycoplus-multi-mann-tabletter,5112386"
+  },
+  {
+    "file": "assets/catalog-978343.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-c-vitamin-1000-mg,10322_978343.jpg?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus C-vitamin 1000 mg",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/vitaminer-og-mineraler/nycoplus-c-vitamin-1000-mg,5006600"
+  },
+  {
+    "file": "assets/catalog-1169401.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-c-vitamin-1000-mg--ingefarekstrakt-og-d3-vitamin,10313_1169401.jpg?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus C-vitamin 1000 mg + ingefærekstrakt og D3-vitamin",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/vitaminer-og-mineraler/nycoplus-c-vitamin-1000-mg--ingefarekstrakt-og-d3-vitamin,5030267"
+  },
+  {
+    "file": "assets/catalog-1207700.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-multi-uten-a--d--og-k-vitamin-tabletter,44745_1207700.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus Multi uten A-, D- og K-vitamin tabletter",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/vitaminer-og-mineraler/nycoplus-multi-uten-a--d--og-k-vitamin-tabletter,5111347"
+  },
+  {
+    "file": "assets/catalog-872303.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-vegetabilsk-omega-3-fra-alger,43237_872303.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus Vegetabilsk Omega-3 fra alger",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/tran-og-omegaprodukter/nycoplus-vegetabilsk-omega-3-fra-alger,5002003"
+  },
+  {
+    "file": "assets/catalog-861423.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-selen-med-e-vitamin,10339_861423.jpg?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus Selen med E-vitamin",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/vitaminer-og-mineraler/nycoplus-selen-med-e-vitamin,5001165"
+  },
+  {
+    "file": "assets/catalog-859443.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-calcium--vitamin-k-og-d3,47118_859443.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus Calcium + vitamin K og D3",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/vitaminer-og-mineraler/nycoplus-calcium--vitamin-k-og-d3,5001157"
+  },
+  {
+    "file": "assets/catalog-861806.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-k2-vitamin-75-g,47100_861806.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus K2-vitamin 75 µg",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/vitaminer-og-mineraler/nycoplus-k2-vitamin-75-g,5001555"
+  },
+  {
+    "file": "assets/catalog-860303.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-ferro-ret-detab-100mg-100,32139_860303.jpg?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus Ferro-Retard 100 mg depottabletter",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/vitaminer-og-mineraler/nycoplus-ferro-ret-detab-100mg-100,5000187"
+  },
+  {
+    "file": "assets/catalog-1201385.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-250-g-krom-tabletter,43232_1201385.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus 250 µg krom tabletter",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/vitaminer-og-mineraler/nycoplus-250-g-krom-tabletter,5105050"
+  },
+  {
+    "file": "assets/catalog-1213788.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-c-vitamin-200-mg2,56176_1213788.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus C-vitamin 200 mg",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/vitaminer-og-mineraler/nycoplus-c-vitamin-200-mg2,5117430"
+  },
+  {
+    "file": "assets/catalog-1214330.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-fertilitet-kvinne,57328_1214330.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus Fertilitet Kvinne",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/vitaminer-og-mineraler/nycoplus-fertilitet-kvinne,5117947"
+  },
+  {
+    "file": "assets/catalog-1208740.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-multi-50-tabletter,43128_1208740.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus Multi 50+ tabletter",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/vitaminer-og-mineraler/nycoplus-multi-50-tabletter,5112387"
+  },
+  {
+    "file": "assets/catalog-1214448.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-magnesium-glysinat-kapsler,58091_1214448.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus Magnesium Glysinat kapsler",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/vitaminer-og-mineraler/nycoplus-magnesium-glysinat-kapsler,5118064"
+  },
+  {
+    "file": "assets/catalog-1211261.webp",
+    "url": "https://www.farmasiet.no/images/nycoplus-calcium-500-mg--vitamin-d3-20-g-tabletter,48704_1211261.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Nycoplus Calcium 500 mg + vitamin D3 20 µg tabletter",
+    "productSource": "https://www.farmasiet.no/catalog/kosttilskudd-og-ernaering/vitaminer-og-mineraler/nycoplus-calcium-500-mg--vitamin-d3-20-g-tabletter,5114904"
+  },
+  {
+    "file": "assets/catalog-1120046.webp",
+    "url": "https://www.farmasiet.no/images/flux-fluorskyll-02--original-coolmint,9538_1120046.jpg?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Flux Fluorskyll 0,2 % Original Coolmint",
+    "productSource": "https://www.farmasiet.no/catalog/munn-og-tann/munnskyll/flux-fluorskyll-02--original-coolmint,5007945"
+  },
+  {
+    "file": "assets/catalog-894880.webp",
+    "url": "https://www.farmasiet.no/images/flux-drops-sugetabletter-stikkelsbar,9552_894880.jpg?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Flux Drops Sugetabletter Stikkelsbær",
+    "productSource": "https://www.farmasiet.no/catalog/munn-og-tann/munntorrhet/flux-drops-sugetabletter-stikkelsbar,5004977"
+  },
+  {
+    "file": "assets/catalog-873995.webp",
+    "url": "https://www.farmasiet.no/images/flux-drops-sugetabletter-jordbrabarbra,9550_873995.jpg?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Flux Drops Sugetabletter Jordb/Rabarbra",
+    "productSource": "https://www.farmasiet.no/catalog/munn-og-tann/munntorrhet/flux-drops-sugetabletter-jordbrabarbra,5002072"
+  },
+  {
+    "file": "assets/catalog-1174139.webp",
+    "url": "https://www.farmasiet.no/images/flux-drops-sugetabletter-sitronlime,1747_1174139.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Flux Drops Sugetabletter Sitron/Lime",
+    "productSource": "https://www.farmasiet.no/catalog/munn-og-tann/munntorrhet/flux-drops-sugetabletter-sitronlime,5034995"
+  },
+  {
+    "file": "assets/catalog-887150.webp",
+    "url": "https://www.farmasiet.no/images/flux-fluorskyll-02--original,9548_887150.jpg?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Flux Fluorskyll 0,2 % Original",
+    "productSource": "https://www.farmasiet.no/catalog/munn-og-tann/munnskyll/flux-fluorskyll-02--original,5004720"
+  },
+  {
+    "file": "assets/catalog-1128442.webp",
+    "url": "https://www.farmasiet.no/images/flux-junior-fluorskyll-02--fruktmint,9537_1128442.jpg?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Flux Junior Fluorskyll 0,2 % Fruktmint",
+    "productSource": "https://www.farmasiet.no/catalog/munn-og-tann/munnskyll/flux-junior-fluorskyll-02--fruktmint,5022495"
+  },
+  {
+    "file": "assets/catalog-860899.webp",
+    "url": "https://www.farmasiet.no/images/flux-munnskyll-med-klorhexidin-og-fluor,48333_860899.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Flux Munnskyll med Klorhexidin og Fluor",
+    "productSource": "https://www.farmasiet.no/catalog/munn-og-tann/munnskyll/flux-munnskyll-med-klorhexidin-og-fluor,5000684"
+  },
+  {
+    "file": "assets/catalog-860141.webp",
+    "url": "https://www.farmasiet.no/images/flux-dry-mouth-gel,9556_860141.jpg?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Flux Dry Mouth Gel",
+    "productSource": "https://www.farmasiet.no/catalog/munn-og-tann/munntorrhet/flux-dry-mouth-gel,5001763"
+  },
+  {
+    "file": "assets/catalog-1213781.webp",
+    "url": "https://www.farmasiet.no/images/compeed-gnagsarplaster-extreme,55509_1213781.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Compeed Gnagsårplaster Extreme",
+    "productSource": "https://www.farmasiet.no/catalog/hud-og-har/fotpleie/compeed-gnagsarplaster-extreme,5117423"
+  },
+  {
+    "file": "assets/catalog-1213776.webp",
+    "url": "https://www.farmasiet.no/images/compeed-gnagsarplaster-medium2,55500_1213776.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Compeed Gnagsårplaster Medium",
+    "productSource": "https://www.farmasiet.no/catalog/hud-og-har/fotpleie/compeed-gnagsarplaster-medium2,5117418"
+  },
+  {
+    "file": "assets/catalog-1213772.webp",
+    "url": "https://www.farmasiet.no/images/compeed-gnagsarplaster-tar,55494_1213772.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Compeed Gnagsårplaster Tær",
+    "productSource": "https://www.farmasiet.no/catalog/hud-og-har/fotpleie/compeed-gnagsarplaster-tar,5117414"
+  },
+  {
+    "file": "assets/catalog-1213780.webp",
+    "url": "https://www.farmasiet.no/images/compeed-gnagsarplaster-small2,55506_1213780.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Compeed Gnagsårplaster Small",
+    "productSource": "https://www.farmasiet.no/catalog/hud-og-har/fotpleie/compeed-gnagsarplaster-small2,5117422"
+  },
+  {
+    "file": "assets/catalog-1213778.webp",
+    "url": "https://www.farmasiet.no/images/compeed-gnagsarplaster-mix-pack,55503_1213778.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Compeed Gnagsårplaster Mix Pack",
+    "productSource": "https://www.farmasiet.no/catalog/hud-og-har/fotpleie/compeed-gnagsarplaster-mix-pack,5117419"
+  },
+  {
+    "file": "assets/catalog-1213782.webp",
+    "url": "https://www.farmasiet.no/images/compeed-gnagsarplaster-fotsale,55473_1213782.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Compeed Gnagsårplaster Fotsåle",
+    "productSource": "https://www.farmasiet.no/catalog/hud-og-har/fotpleie/compeed-gnagsarplaster-fotsale,5117424"
+  },
+  {
+    "file": "assets/catalog-860742.webp",
+    "url": "https://www.farmasiet.no/images/compeed-invisible-munnsarplaster,45224_860742.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Compeed Invisible Munnsårplaster",
+    "productSource": "https://www.farmasiet.no/catalog/munn-og-tann/sar-irundt-munnen/compeed-invisible-munnsarplaster,5000568"
+  },
+  {
+    "file": "assets/catalog-1213770.webp",
+    "url": "https://www.farmasiet.no/images/compeed-liktornplaster-medium2,55487_1213770.png?width=404&height=404&rmode=Max&quality=85&format=webp",
+    "product": "Compeed Liktornplaster Medium",
+    "productSource": "https://www.farmasiet.no/catalog/hud-og-har/fotpleie/compeed-liktornplaster-medium2,5117412"
+  },
+  {
+    "file": "assets/fjordbyen-handkrem.svg",
+    "product": "Fjordbyen Håndkrem",
+    "source": "Egen emballasjeillustrasjon for Fjordbyen Hverdagspleie"
+  },
+  {
+    "file": "assets/fjordbyen-bodylotion.svg",
+    "product": "Fjordbyen Kroppskrem",
+    "source": "Egen emballasjeillustrasjon for Fjordbyen Hverdagspleie"
+  },
+  {
+    "file": "assets/fjordbyen-handvask.svg",
+    "product": "Fjordbyen Håndvask",
+    "source": "Egen emballasjeillustrasjon for Fjordbyen Hverdagspleie"
+  },
+  {
+    "file": "assets/fjordbyen-forstehjelp.svg",
+    "product": "Fjordbyen Førstehjelpspakke",
+    "source": "Egen emballasjeillustrasjon"
+  }
+]

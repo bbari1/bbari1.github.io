@@ -1,0 +1,47 @@
+[
+  {
+    "id": "own1",
+    "name": "Fjordbyen Håndkrem",
+    "size": "75 ml",
+    "category": "Hudpleie",
+    "price": 129,
+    "image": "assets/fjordbyen-handkrem.svg",
+    "benefit": "Vår egen håndkrem til hverdagens små pauser.",
+    "brand": "Fjordbyen",
+    "own": true,
+    "eligible": true,
+    "stock": 40,
+    "desc": "Vår egen håndkrem til hverdagens små pauser. En del av Fjordbyen Hverdagspleie.",
+    "tone": "#dce5cf"
+  },
+  {
+    "id": "own2",
+    "name": "Fjordbyen Kroppskrem",
+    "size": "200 ml",
+    "category": "Hudpleie",
+    "price": 179,
+    "image": "assets/fjordbyen-bodylotion.svg",
+    "benefit": "Kroppspleie fra legekontorets egen serie.",
+    "brand": "Fjordbyen",
+    "own": true,
+    "eligible": true,
+    "stock": 40,
+    "desc": "Kroppspleie fra legekontorets egen serie. En del av Fjordbyen Hverdagspleie.",
+    "tone": "#dce5cf"
+  },
+  {
+    "id": "own3",
+    "name": "Fjordbyen Håndvask",
+    "size": "200 ml",
+    "category": "Hudpleie",
+    "price": 99,
+    "image": "assets/fjordbyen-handvask.svg",
+    "benefit": "En fast plass ved håndvasken.",
+    "brand": "Fjordbyen",
+    "own": true,
+    "eligible": true,
+    "stock": 40,
+    "desc": "En fast plass ved håndvasken. En del av Fjordbyen Hverdagspleie.",
+    "tone": "#dce5cf"
+  }
+]
