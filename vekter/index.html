@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Quiz, flashcards, lærebok og prøveeksamen for vekterfaget." />
+  <meta name="theme-color" content="#F4F1E9" />
+  <meta name="color-scheme" content="light" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="VEKTER" />
+  <meta name="application-name" content="VEKTER" />
+  <meta name="format-detection" content="telephone=no" />
+  <title>VEKTER — pugg smart</title>
+  <link rel="icon" href="assets/app-icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" sizes="180x180" />
+  <link rel="mask-icon" href="assets/app-icon.svg" color="#3A36FF" />
+  <link rel="manifest" href="manifest.webmanifest" />
+
+  <style>
+    @font-face { font-family:Inter; src:url("./vendor/fonts/inter-400.ttf") format("truetype"); font-weight:400; font-display:swap; }
+    @font-face { font-family:Inter; src:url("./vendor/fonts/inter-600.ttf") format("truetype"); font-weight:600; font-display:swap; }
+    @font-face { font-family:Inter; src:url("./vendor/fonts/inter-700.ttf") format("truetype"); font-weight:700; font-display:swap; }
+    @font-face { font-family:"Space Grotesk"; src:url("./vendor/fonts/space-500.ttf") format("truetype"); font-weight:500; font-display:swap; }
+    @font-face { font-family:"Space Grotesk"; src:url("./vendor/fonts/space-600.ttf") format("truetype"); font-weight:600; font-display:swap; }
+    @font-face { font-family:"Space Grotesk"; src:url("./vendor/fonts/space-700.ttf") format("truetype"); font-weight:700; font-display:swap; }
+  </style>
+  <script src="./vendor/tailwindcss.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            paper: "#F4F1E9", ink: "#111111", brand: "#3A36FF",
+            lime: "#CBFF3C", ok: "#0F9D6E", bad: "#E0485F", warn: "#E58A1F",
+          },
+          fontFamily: {
+            display: ['"Space Grotesk"', "sans-serif"],
+            sans: ["Inter", "system-ui", "sans-serif"],
+          },
+          boxShadow: {
+            brutal: "5px 5px 0 #111", "brutal-lg": "8px 8px 0 #111", "brutal-sm": "3px 3px 0 #111",
+          },
+        },
+      },
+    };
+  </script>
+
+  <style type="text/tailwindcss">
+    @layer base {
+      body { @apply bg-paper text-ink font-sans; }
+      h1,h2,h3 { @apply font-display; }
+      [hidden] { display: none !important; }
+    }
+    @layer utilities {
+      .font-500 { font-weight: 500; }
+      .font-600 { font-weight: 600; }
+      .font-700 { font-weight: 700; }
+    }
+    @layer components {
+      .card    { @apply bg-white border-2 border-ink shadow-brutal transition-transform duration-100; }
+      .card-hover:hover { @apply -translate-x-0.5 -translate-y-0.5 shadow-brutal-lg; }
+      .btn     { @apply inline-flex items-center justify-center gap-2 border-2 border-ink font-display font-bold px-5 py-3 shadow-brutal transition-all duration-75 active:translate-x-1 active:translate-y-1 active:shadow-none disabled:opacity-40; }
+      .btn-brand { @apply bg-brand text-white; }
+      .btn-lime  { @apply bg-lime text-ink; }
+      .btn-white { @apply bg-white text-ink; }
+      .pill    { @apply inline-block border-2 border-ink px-2 py-0.5 text-[11px] font-bold uppercase tracking-wider bg-lime; }
+      .tag     { @apply inline-block border-2 border-ink px-2 py-0.5 text-[11px] font-bold uppercase tracking-wider; }
+    }
+    /* ---- focus: brutalistisk, ikke blå UA-boks ---- */
+    :focus { outline: none; }
+    :focus-visible { outline: 3px solid #111; outline-offset: 2px; }
+    /* ---- dialog backdrop ---- */
+    dialog::backdrop { background: rgba(17,17,17,.55); }
+    /* ---- fullskjerm quiz/eksamen (mindre distraksjon) ---- */
+    #quiz { width: 100vw; height: 100dvh; max-width: 100vw; max-height: 100dvh; border: 0; background: #F4F1E9; }
+    #quiz .quiz-inner { max-width: 44rem; margin-inline: auto; width: 100%; min-height: 100%; display: flex; flex-direction: column; }
+    #quiz.chapter-quiz { width:min(720px,94vw); height:auto; max-width:94vw; max-height:88vh; margin:auto; border:2px solid #111; box-shadow:8px 8px 0 #111; }
+    #quiz.chapter-quiz .quiz-inner { min-height:0; max-height:calc(88vh - 4px); overflow:auto; }
+    #quiz.chapter-quiz #quiz-question-panel { justify-content:flex-start; }
+    /* ---- reader: rolig, lesbar typografi ---- */
+    #reader { width:min(1120px,96vw); max-height:92vh; }
+    .reader-head { position:sticky; top:0; z-index:12; background:#fff; }
+    #reader-progress { height:4px; background:#e6e2d6; }
+    #reader-progress > span { display:block; height:100%; width:0%; background:#3A36FF; transition:width .08s linear; }
+    .reader-layout { display:grid; grid-template-columns:240px minmax(0,1fr); align-items:start; }
+    .reader-sidebar { position:sticky; top:58px; align-self:start; max-height:calc(92vh - 132px); overflow:auto; border-right:2px solid #111; padding:22px 16px; }
+    .prose-reader { width:100%; max-width:68ch; margin-inline:auto; padding:30px 42px 64px; }
+    .prose-reader h2 { @apply mb-3 mt-9 border-b-2 border-ink pb-1.5 font-display text-2xl font-700; }
+    .prose-reader h3 { @apply mb-1.5 mt-6 font-display text-lg font-600; }
+    .prose-reader p  { @apply mb-4 text-[16px] leading-8 text-ink/85; }
+    .prose-reader ul { @apply mb-4 list-disc space-y-2 pl-6; }
+    .prose-reader ol { @apply mb-4 list-decimal space-y-2 pl-6; }
+    .prose-reader li { @apply text-[16px] leading-7 text-ink/85; }
+    .prose-reader li::marker { color:#3A36FF; font-weight:800; }
+    .prose-reader h2:first-child { @apply mt-0; }
+    .prose-reader h2[id] { scroll-margin-top: 74px; }
+    .reader-toc ol { margin:0; padding:0; list-style:none; }
+    .reader-toc a { display:block; margin-bottom:2px; border-left:3px solid transparent; padding:7px 9px; font-size:13px; line-height:1.35; color:rgba(17,17,17,.66); }
+    .reader-toc a:hover, .reader-toc a.active { border-left-color:#3A36FF; background:rgba(58,54,255,.08); color:#3A36FF; font-weight:600; }
+    .reader-callout { margin:22px 0; border:2px solid #111; border-left-width:8px; padding:16px 18px; box-shadow:3px 3px 0 #111; }
+    .reader-callout p { margin:0; color:#111; }
+    .reader-callout--important { border-left-color:#3A36FF; background:rgba(58,54,255,.09); }
+    .reader-callout--warning { border-left-color:#E58A1F; background:rgba(229,138,31,.13); }
+    .reader-callout--example { border-left-color:#0F9D6E; background:rgba(15,157,110,.1); }
+    .reader-callout--remember { border-left-color:#CBFF3C; background:rgba(203,255,60,.28); }
+    .reader-jump-target { background:rgba(203,255,60,.5); box-shadow:0 0 0 5px rgba(203,255,60,.5); }
+    .reader-section-title { display:flex; align-items:center; gap:10px; margin-top:36px; border-bottom:2px solid #111; }
+    .reader-section-title h2 { flex:1; margin-top:0; border-bottom:0; }
+    .reader-section-bookmark { flex:none; border:2px solid #111; background:#fff; padding:5px 9px; font-size:15px; line-height:1; }
+    .reader-section-bookmark.active { background:#CBFF3C; }
+    #search-results { max-height:50vh; overflow:auto; }
+    /* mobil: fullskjerm-lesing + innholdsfortegnelse som ryddig topp-panel */
+    @media (max-width: 760px) {
+      #reader { width:100vw; height:100dvh; max-width:100vw; max-height:100dvh; margin:0; border:0; box-shadow:none; }
+      .reader-layout { display:block; }
+      #reader-title { font-size:15px; }
+      .reader-sidebar {
+        position:fixed; left:0; right:0; top:54px; z-index:40;
+        display:none; max-height:64dvh; overflow:auto;
+        border:0; border-bottom:2px solid #111; background:#F4F1E9; padding:14px 16px 18px;
+        box-shadow:0 12px 26px rgba(17,17,17,.24);
+      }
+      .reader-sidebar.open { display:block; }
+      .reader-toc p { margin-bottom:8px; }
+      .reader-toc a { margin-bottom:6px; border:2px solid #111; border-left-width:2px; padding:9px 10px; font-size:13px; background:#fff; }
+      .reader-toc a:hover, .reader-toc a.active { border-color:#111; background:#3A36FF; color:#fff; }
+      .prose-reader { padding:22px 18px 56px; max-width:none; }
+      .prose-reader h2[id] { scroll-margin-top: 66px; }
+      .reader-section-title { margin-top:30px; }
+    }
+    /* ---- ring ---- */
+    .ring { transform: rotate(-90deg); }
+    .ring-bg { fill:none; stroke:#e6e2d6; stroke-width:12; }
+    .ring-fill { fill:none; stroke:#111; stroke-width:12; stroke-linecap:butt; transition:stroke-dashoffset .6s cubic-bezier(.2,.8,.2,1); }
+    /* ---- progress ---- */
+    .barfill { transition: width .35s ease; }
+    /* ---- flashcard flip + swipe ---- */
+    .flashcard { perspective: 1400px; touch-action: pan-y; }
+    .flashcard-inner { position:relative; width:100%; height:100%; transition: transform .5s cubic-bezier(.2,.8,.2,1); transform-style: preserve-3d; }
+    .flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
+    .fc-face { position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; padding:28px; }
+    .fc-back { transform: rotateY(180deg); }
+    .swipe-wrap { position:relative; height:320px; }
+    .swipe-card { position:absolute; inset:0; will-change: transform; }
+    .swipe-card.dragging { transition:none; }
+    .swipe-card.animate { transition: transform .3s ease, opacity .3s ease; }
+    .swipe-badge { position:absolute; z-index:5; top:22px; padding:4px 12px; font-family:"Space Grotesk"; font-weight:700; border:2px solid #111; opacity:0; transition:opacity .1s; }
+    .badge-yes { right:24%; background:#CBFF3C; transform: rotate(8deg); }
+    .badge-no  { left:24%; background:#E0485F; color:#fff; transform: rotate(-8deg); }
+    /* ---- toast ---- */
+    .toast { position:fixed; left:50%; bottom:92px; transform:translate(-50%,20px); background:#111; color:#F4F1E9; padding:12px 20px; border:2px solid #111; font-weight:600; z-index:100; opacity:0; pointer-events:none; transition:opacity .2s, transform .2s; }
+    .toast.show { opacity:1; transform:translate(-50%,0); }
+    .tooltip-wrap { position:relative; display:inline-flex; align-items:center; gap:5px; }
+    .tooltip-text { position:absolute; right:0; top:calc(100% + 9px); width:max-content; max-width:180px; border:2px solid #111; background:#fff; padding:6px 9px; color:#111; font-size:11px; font-weight:700; line-height:1.2; box-shadow:3px 3px 0 #111; opacity:0; pointer-events:none; transform:translateY(-3px); transition:opacity .15s, transform .15s; }
+    .tooltip-wrap:hover .tooltip-text, .tooltip-wrap:focus-visible .tooltip-text { opacity:1; transform:translateY(0); }
+    /* hide scrollbars on horizontal rails */
+    .no-scrollbar::-webkit-scrollbar { display:none; }
+    .no-scrollbar { scrollbar-width:none; }
+  </style>
+</head>
+<body class="pb-28">
+
+  <!-- ===================== Top brand bar ===================== -->
+  <header class="sticky top-0 z-30 flex items-center gap-3 border-b-2 border-ink bg-paper px-4 py-3 md:px-8">
+    <div class="font-display text-xl font-700 tracking-tight">VEKTER<span class="text-brand">.</span></div>
+    <span class="tag ml-1 hidden bg-white sm:inline-block">Pugg smart</span>
+    <div class="ml-auto flex items-center gap-3">
+      <span class="tooltip-wrap tag h-8 bg-lime !py-0" id="streak-chip" tabindex="0" aria-describedby="streak-tooltip">
+        <span class="text-base leading-none" aria-hidden="true">🔥</span>
+        <b id="streak-num">0</b>
+        <span class="tooltip-text" id="streak-tooltip" role="tooltip">Dager på rad</span>
+      </span>
+      <button class="flex h-8 items-center gap-1.5 border-2 border-ink bg-white px-1.5 shadow-brutal-sm" data-view="dash" title="Mestring" aria-label="Mestring">
+        <span class="hidden text-[9px] font-bold uppercase tracking-wide text-ink/55 sm:inline">Mestring</span>
+        <span class="h-2 w-7 overflow-hidden border border-ink bg-[#e6e2d6]" aria-hidden="true">
+          <span id="readiness-bar" class="block h-full w-0 bg-brand transition-[width] duration-500"></span>
+        </span>
+        <span class="font-display text-[11px] font-700" id="readiness">0%</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-4xl px-4 py-6 md:px-8">
+
+    <!-- ===================== Oversikt (slim) ===================== -->
+    <section id="dash" class="view">
+      <h1 class="mb-1 text-3xl font-700 tracking-tight" id="hero-greeting">Klar for en økt?</h1>
+      <p class="mb-6 text-ink/60" id="hero-sub">Din status akkurat nå.</p>
+
+      <!-- Statistikk status -->
+      <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <div class="card p-4 text-center">
+          <b id="stat-readiness" class="block font-display text-3xl font-700">0%</b>
+          <span class="text-[11px] uppercase tracking-wide text-ink/60">mestring</span>
+        </div>
+        <div class="card p-4 text-center">
+          <b id="stat-mastered" class="block font-display text-3xl font-700">0</b>
+          <span class="text-[11px] uppercase tracking-wide text-ink/60">mestret</span>
+        </div>
+        <div class="card p-4 text-center">
+          <b id="stat-seen" class="block font-display text-3xl font-700">0</b>
+          <span class="text-[11px] uppercase tracking-wide text-ink/60">sett</span>
+        </div>
+        <div class="card p-4 text-center">
+          <b id="stat-streak" class="block font-display text-3xl font-700">0</b>
+          <span class="text-[11px] uppercase tracking-wide text-ink/60">dager</span>
+        </div>
+      </div>
+
+      <div id="continue-card" class="card mt-3 hidden px-3 py-2.5">
+        <div class="flex items-center gap-3">
+          <span class="min-w-0 flex-1">
+            <b id="continue-title" class="block truncate font-display text-sm font-700 text-warn"></b>
+            <span id="continue-sub" class="block truncate text-[11px] text-ink/55"></span>
+          </span>
+          <button class="shrink-0 text-sm font-bold text-brand underline underline-offset-4" data-continue-study>Fortsett der du slapp →</button>
+          <button class="grid h-6 w-6 shrink-0 place-items-center border-2 border-ink bg-white text-xs font-bold" data-dismiss-continue aria-label="Fjern Fortsett">✕</button>
+        </div>
+      </div>
+
+      <!-- Mine feil + Stjernemerkede -->
+      <div class="mt-4 grid gap-4 sm:grid-cols-2">
+        <button class="card card-hover flex items-center gap-4 p-5 text-left" data-start-wrong>
+          <span class="grid h-12 w-12 place-items-center border-2 border-ink bg-bad text-2xl text-white">✗</span>
+          <span class="flex-1">
+            <span class="block font-display text-lg font-700">Mine feil</span>
+            <span class="text-sm text-ink/60"><b id="wrong-count">0</b> spørsmål å rette opp</span>
+          </span>
+          <span class="font-display font-700">→</span>
+        </button>
+        <button class="card card-hover flex items-center gap-4 p-5 text-left" data-start-starred>
+          <span class="grid h-12 w-12 place-items-center border-2 border-ink bg-lime text-2xl">★</span>
+          <span class="flex-1">
+            <span class="block font-display text-lg font-700">Stjernemerkede</span>
+            <span class="text-sm text-ink/60"><b id="starred-count">0</b> lagret for senere</span>
+          </span>
+          <span class="font-display font-700">→</span>
+        </button>
+      </div>
+
+      <button class="btn btn-brand mt-5 w-full !py-4 text-lg text-white shadow-brutal-lg" data-open-review-choice>
+        <svg class="h-6 w-6 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+          <path d="M20 7h-7a5 5 0 0 0-5 5v1"/><path d="m17 4 3 3-3 3"/><path d="M4 17h7a5 5 0 0 0 5-5v-1"/><path d="m7 20-3-3 3-3"/>
+        </svg>
+        <span id="review-cta">Start smart repetisjon</span>
+      </button>
+
+      <section class="mt-7">
+        <div class="mb-3 flex items-end justify-between">
+          <h2 class="text-xl font-700">Siste eksamener</h2>
+          <span class="text-xs text-ink/55">lagres på denne enheten</span>
+        </div>
+        <div id="exam-history" class="grid gap-3"></div>
+      </section>
+    </section>
+
+    <!-- ===================== Øv ===================== -->
+    <section id="ov" class="view">
+      <div class="mb-4 flex items-center justify-between gap-3">
+        <h1 class="text-3xl font-700 tracking-tight">Øv</h1>
+        <button class="btn btn-brand !px-4 !py-2.5 text-white" data-start-mixed>Blandet quiz</button>
+      </div>
+
+      <!-- Moduler -->
+      <div id="practice-list" class="grid gap-4 sm:grid-cols-2"></div>
+    </section>
+
+    <!-- ===================== Les ===================== -->
+    <section id="les" class="view">
+      <div class="mb-4 flex items-end justify-between">
+        <h1 class="text-3xl font-700 tracking-tight">Læreboka</h1>
+        <span class="text-sm text-ink/60" id="read-progress"></span>
+      </div>
+      <div class="card mb-5 p-4">
+        <label for="global-search" class="mb-2 block font-display text-sm font-700">Søk i lærebok, spørsmål og begreper</label>
+        <div class="flex gap-2">
+          <input id="global-search" class="min-w-0 flex-1 border-2 border-ink bg-white px-3 py-2.5" type="search" placeholder="Søk etter f.eks. nødverge …" />
+          <button class="btn btn-brand !px-4 !py-2 text-white" data-run-search>Søk</button>
+        </div>
+        <div id="search-results" class="mt-3 grid gap-2" hidden></div>
+      </div>
+      <div class="mb-4 flex flex-wrap gap-2">
+        <button class="reader-list-tab btn btn-white !px-4 !py-2" data-reader-list="chapters">Kapitler</button>
+        <button class="reader-list-tab btn btn-white !px-4 !py-2" data-reader-list="bookmarks">Bokmerker</button>
+        <button class="reader-list-tab btn btn-white !px-4 !py-2" data-reader-list="glossary">Begrepsregister</button>
+      </div>
+      <div id="chapter-list" class="flex flex-col gap-3"></div>
+      <div id="bookmark-list" class="grid gap-3" hidden></div>
+      <div id="glossary-list" class="grid gap-2 sm:grid-cols-2" hidden></div>
+    </section>
+
+    <!-- ===================== Kort ===================== -->
+    <section id="kort" class="view">
+      <h1 class="mb-1 text-3xl font-700 tracking-tight">Flashcards</h1>
+      <p class="mb-5 text-sm text-ink/60">Swipe → hvis du kan det, ← for å øve mer. Appen planlegger repetisjonen.</p>
+      <div id="flashcard-list" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"></div>
+    </section>
+
+    <div id="reset-wrap" class="mt-14">
+      <details class="border-y border-ink/20">
+        <summary class="flex cursor-pointer list-none items-center justify-between py-4 text-sm font-600 text-ink/65">
+          <span>Innstillinger</span>
+          <span class="text-[8px] text-ink/45">●</span>
+        </summary>
+        <div class="flex flex-wrap gap-x-5 gap-y-3 border-t border-ink/15 py-4 text-sm">
+          <button class="font-600 text-bad underline underline-offset-4" data-reset>Nullstill</button>
+          <button class="font-600 text-brand underline underline-offset-4" data-import-progress>Importer</button>
+          <button class="font-600 text-brand underline underline-offset-4" data-export-progress>Eksporter</button>
+          <input id="progress-import-file" type="file" accept="application/json,.json" hidden />
+        </div>
+      </details>
+    </div>
+
+  </main>
+
+  <!-- ===================== Bottom nav ===================== -->
+  <nav class="fixed inset-x-0 bottom-0 z-30 grid grid-cols-5 border-t-2 border-ink bg-paper">
+    <button class="nav-link flex flex-col items-center gap-0.5 py-2.5 text-[11px] font-bold" data-view="dash"><span class="text-lg">◆</span>Oversikt</button>
+    <button class="nav-link flex flex-col items-center gap-0.5 py-2.5 text-[11px] font-bold" data-view="ov"><span class="text-lg">✎</span>Øv</button>
+    <button class="flex flex-col items-center gap-0.5 border-x-2 border-ink bg-lime py-2.5 text-[11px] font-700" data-start-exam><span class="text-lg">▚</span>Eksamen</button>
+    <button class="nav-link flex flex-col items-center gap-0.5 py-2.5 text-[11px] font-bold" data-view="les"><span class="text-lg">▤</span>Les</button>
+    <button class="nav-link flex flex-col items-center gap-0.5 py-2.5 text-[11px] font-bold" data-view="kort"><span class="text-lg">▣</span>Kort</button>
+  </nav>
+
+  <!-- ===================== Reader dialog ===================== -->
+  <dialog id="reader" class="card m-auto overflow-auto p-0 backdrop:bg-ink/60">
+    <div class="reader-head">
+      <div class="flex items-center gap-2 border-b-2 border-ink px-4 py-3">
+        <button id="reader-toc-toggle" class="btn btn-white !px-3 !py-2 !shadow-brutal-sm md:hidden" data-toggle-reader-toc aria-expanded="false" hidden>☰ Innhold</button>
+        <h3 id="reader-title" class="min-w-0 flex-1 truncate font-display text-base font-700 md:text-lg">Kapittel</h3>
+        <button class="btn btn-white !p-2 !shadow-brutal-sm" data-bookmark-chapter title="Bokmerk kapittel" aria-label="Bokmerk kapittel">☆</button>
+        <button class="btn btn-white !p-2 !shadow-brutal-sm" data-close-reader aria-label="Lukk">✕</button>
+      </div>
+      <div id="reader-progress"><span></span></div>
+    </div>
+    <div id="reader-layout" class="reader-layout">
+      <aside id="reader-sidebar" class="reader-sidebar" aria-label="Innholdsfortegnelse"></aside>
+      <article id="reader-content" class="prose-reader"></article>
+    </div>
+    <div class="sticky bottom-0 z-10 flex flex-wrap items-center gap-2 border-t-2 border-ink bg-white px-3 py-3">
+      <button class="btn btn-white !px-3" data-reader-prev aria-label="Forrige kapittel">←</button>
+      <button class="btn btn-white !px-3" data-reader-next aria-label="Neste kapittel">→</button>
+      <button class="btn flex-1 bg-[#BFE4FF] !px-3 !py-2.5" data-toggle-read>Marker lest</button>
+      <button class="btn btn-lime flex-1" id="reader-practice" data-chapter-quiz="">Øv →</button>
+    </div>
+  </dialog>
+
+  <!-- ===================== Quiz dialog ===================== -->
+  <dialog id="quiz" class="p-0 backdrop:bg-ink/60">
+   <div class="quiz-inner">
+    <div class="flex items-start gap-3 border-b-2 border-ink px-5 py-4">
+      <div class="flex flex-col gap-1.5">
+        <span id="quiz-mode" class="pill"></span>
+        <h3 id="quiz-title" class="font-display text-lg font-700"></h3>
+      </div>
+      <div class="ml-auto flex items-center gap-3">
+        <span id="exam-timer" class="tag bg-white text-base" hidden>04:00:00</span>
+        <button class="btn btn-white !p-2 !shadow-brutal-sm" data-close-quiz aria-label="Lukk">✕</button>
+      </div>
+    </div>
+    <div class="h-1.5 bg-[#e6e2d6]"><span id="quiz-bar" class="barfill block h-full w-0 bg-ink"></span></div>
+
+    <section id="quiz-question-panel" class="flex flex-1 flex-col justify-center p-5">
+      <div class="mb-3 flex items-center justify-between text-xs font-bold text-ink/60">
+        <span id="quiz-count"></span>
+        <span class="flex items-center gap-3">
+          <span id="quiz-live-score"></span>
+          <button class="text-xl leading-none text-ink/40" data-star title="Stjernemerk (S)">☆</button>
+        </span>
+      </div>
+      <div class="mb-5 border-2 border-ink bg-[#BFE4FF] px-5 py-6 text-center shadow-brutal sm:px-7 sm:py-7">
+        <h2 id="question" class="font-display text-2xl font-700 leading-snug sm:text-[28px]"></h2>
+      </div>
+      <div id="answers" class="flex flex-col gap-2.5"></div>
+      <div id="exam-question-tools" class="mt-4 grid grid-cols-[1fr_auto_1fr] items-center gap-3" hidden>
+        <button class="btn btn-white justify-self-start !px-4 !py-2" data-exam-prev>← Forrige</button>
+        <span class="flex flex-col items-center gap-1">
+          <button class="text-sm font-bold text-brand underline underline-offset-4" data-exam-overview>Oversikt</button>
+          <button class="text-xs font-bold text-warn underline underline-offset-4" data-exam-flag>Flagg spørsmål</button>
+        </span>
+        <button class="btn btn-brand justify-self-end !px-4 !py-2 text-white disabled:cursor-not-allowed disabled:opacity-35" data-exam-next disabled>Neste →</button>
+      </div>
+      <div id="explanation" class="mt-3 border-2 border-ink p-3 text-sm leading-6" hidden></div>
+      <button id="question-book-link" class="btn btn-white mt-3 w-full" data-open-question-book hidden>Vis relevant pensum →</button>
+      <aside id="question-book-excerpt" class="mt-3 border-2 border-ink bg-white p-4 text-left" hidden>
+        <span class="pill">Relevant pensum</span>
+        <h3 id="question-book-heading" class="mt-3 font-display text-lg font-700"></h3>
+        <div id="question-book-text" class="mt-2 space-y-3 text-sm leading-7 text-ink/80"></div>
+        <button class="btn btn-lime mt-4 w-full !py-2.5" data-close-question-book>Forstått – lukk</button>
+      </aside>
+      <button id="next-question" class="btn btn-brand mt-5 w-full text-white" hidden>Neste →</button>
+    </section>
+
+    <section id="exam-overview-panel" class="flex-1 p-5" hidden>
+      <div class="mb-5 flex items-center justify-between gap-3">
+        <div><span class="pill">Eksamen</span><h2 class="mt-2 text-2xl font-700">Spørsmålsoversikt</h2></div>
+        <button class="btn btn-white !px-4 !py-2" data-close-exam-overview>Tilbake</button>
+      </div>
+      <p class="mb-4 text-sm text-ink/60">Du kan åpne spørsmål du allerede har besøkt. Gule spørsmål er flagget.</p>
+      <div id="exam-overview-grid" class="grid grid-cols-5 gap-2 sm:grid-cols-8"></div>
+    </section>
+
+    <section id="quiz-result-panel" class="flex flex-1 flex-col items-center justify-center p-6 text-center" hidden>
+      <div class="relative h-[140px] w-[140px]">
+        <svg class="ring h-full w-full" viewBox="0 0 120 120" aria-hidden="true">
+          <circle class="ring-bg" cx="60" cy="60" r="52"></circle>
+          <circle id="result-ring-fill" class="ring-fill" cx="60" cy="60" r="52"></circle>
+        </svg>
+        <div class="absolute inset-0 flex items-center justify-center">
+          <span id="result-pct" class="font-display text-3xl font-700">0%</span>
+        </div>
+      </div>
+      <div id="result-verdict" class="mt-3 font-display text-2xl font-700"></div>
+      <p id="result-summary" class="mt-2 max-w-[46ch] text-ink/70"></p>
+      <div id="result-stats" class="mt-5 grid w-full grid-cols-2 gap-3 sm:grid-cols-4"></div>
+      <div id="result-breakdown" class="mt-4 flex flex-wrap items-center justify-center gap-2"></div>
+      <label id="exam-review-toggle-wrap" class="mt-5 flex cursor-pointer items-center gap-3 border-2 border-ink bg-white px-4 py-3 text-left" hidden>
+        <input id="exam-review-toggle" type="checkbox" class="h-5 w-5 accent-[#3A36FF]" />
+        <span><b class="block font-display">Vis fasit og feil</b><small class="text-ink/60">Åpner gjennomgangen etter at eksamen er levert.</small></span>
+      </label>
+      <div id="exam-review-list" class="mt-4 w-full space-y-3 text-left" hidden></div>
+      <div class="mt-6 flex w-full flex-wrap gap-3">
+        <button id="result-review-wrong" class="btn flex-1 bg-bad text-white" hidden>Repeter feilene</button>
+        <button id="result-retry" class="btn btn-white flex-1">Prøv igjen</button>
+        <button id="result-next" class="btn btn-brand flex-1 text-white" hidden>Neste quiz →</button>
+      </div>
+    </section>
+   </div>
+  </dialog>
+
+  <dialog id="confirm-dialog" class="card m-auto w-[min(400px,92vw)] p-0 backdrop:bg-ink/60">
+    <div class="flex items-center gap-3 border-b-2 border-ink bg-white px-4 py-3">
+      <span class="pill">Bekreft</span>
+      <button class="btn btn-white ml-auto !p-2 !shadow-brutal-sm" data-confirm-cancel aria-label="Lukk">✕</button>
+    </div>
+    <div class="p-5">
+      <h3 id="confirm-title" class="font-display text-xl font-700">Er du sikker?</h3>
+      <p id="confirm-message" class="mt-2 text-sm leading-6 text-ink/65"></p>
+      <div class="mt-5 flex justify-end gap-3">
+        <button class="btn btn-white !px-4 !py-2.5" data-confirm-cancel>Avbryt</button>
+        <button id="confirm-action" class="btn bg-bad !px-4 !py-2.5 text-white" data-confirm-action>Fortsett</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="exam-history-detail" class="card m-auto max-h-[88vh] w-[min(760px,94vw)] overflow-auto p-0 backdrop:bg-ink/60">
+    <div class="sticky top-0 z-10 flex items-center gap-3 border-b-2 border-ink bg-white px-5 py-4">
+      <div><span class="pill">Eksamenhistorikk</span><h3 id="history-detail-title" class="mt-1 font-display text-lg font-700"></h3></div>
+      <button class="btn btn-white ml-auto !p-2 !shadow-brutal-sm" data-close-history-detail aria-label="Lukk">✕</button>
+    </div>
+    <div id="history-detail-summary" class="border-b-2 border-ink bg-paper p-5"></div>
+    <div id="history-detail-list" class="space-y-3 p-5"></div>
+  </dialog>
+
+  <dialog id="review-choice" class="card m-auto w-[min(480px,94vw)] p-0 backdrop:bg-ink/60">
+    <div class="flex items-center gap-3 border-b-2 border-ink px-5 py-4">
+      <span class="pill">Smart repetisjon</span>
+      <h3 class="font-display text-lg font-700">Hva vil du repetere?</h3>
+      <button class="btn btn-white ml-auto !p-2 !shadow-brutal-sm" data-close-review-choice aria-label="Lukk">✕</button>
+    </div>
+    <div class="grid gap-3 p-5 sm:grid-cols-2">
+      <button class="card card-hover p-5 text-left" data-start-review-type="quiz">
+        <b class="block font-display text-lg">Quiz</b>
+        <span class="mt-1 block text-sm text-ink/60">Repeter spørsmål som er klare.</span>
+      </button>
+      <button class="card card-hover p-5 text-left" data-start-review-type="cards">
+        <b class="block font-display text-lg">Flashcards</b>
+        <span class="mt-1 block text-sm text-ink/60">Repeter kort som er klare.</span>
+      </button>
+    </div>
+  </dialog>
+
+  <dialog id="exam-setup" class="card m-auto w-[min(560px,94vw)] p-0 backdrop:bg-ink/60">
+    <div class="flex items-center gap-3 border-b-2 border-ink px-5 py-4">
+      <span class="pill">Prøveeksamen</span>
+      <h3 class="font-display text-lg font-700">Klar til å starte?</h3>
+      <button class="btn btn-white ml-auto !p-2 !shadow-brutal-sm" data-close-exam-setup aria-label="Lukk">✕</button>
+    </div>
+    <div class="p-5">
+      <div class="grid grid-cols-3 gap-3 text-center">
+        <div class="border-2 border-ink bg-white p-3"><b class="block text-xl">80</b><small>spørsmål</small></div>
+        <div class="border-2 border-ink bg-white p-3"><b class="block text-xl">80 %</b><small>bestått</small></div>
+        <div class="border-2 border-ink bg-white p-3"><b class="block text-xl">15</b><small>kapitler</small></div>
+      </div>
+      <div class="mt-5 border-2 border-ink bg-white p-4">
+        <span class="text-xs font-bold uppercase tracking-wider text-ink/55">Eksamenstid</span>
+        <b class="mt-1 block font-display text-2xl">4 timer</b>
+      </div>
+      <fieldset class="mt-5">
+        <legend class="mb-2 font-display text-sm font-700">Velg eksamensmodus</legend>
+        <div class="grid gap-3 sm:grid-cols-2">
+          <label class="cursor-pointer border-2 border-ink bg-white p-4">
+            <input type="radio" name="exam-mode" value="realistic" class="mr-2 accent-[#3A36FF]" checked />
+            <b class="font-display">Realistisk</b>
+            <small class="mt-1 block text-ink/60">Ingen fasit før du leverer.</small>
+          </label>
+          <label class="cursor-pointer border-2 border-ink bg-white p-4">
+            <input type="radio" name="exam-mode" value="feedback" class="mr-2 accent-[#3A36FF]" />
+            <b class="font-display">Med fasit underveis</b>
+            <small class="mt-1 block text-ink/60">Viser riktig svar, forklaring og pensum etter hvert spørsmål.</small>
+          </label>
+        </div>
+      </fieldset>
+      <ul class="mt-5 list-disc space-y-2 pl-5 text-sm text-ink/75">
+        <li>Du må svare før du går videre.</li>
+        <li id="exam-mode-note">Fasit og resultat vises først etter levering.</li>
+        <li>Eksamen påvirker ikke øvingsprogresjonen.</li>
+      </ul>
+      <button class="btn btn-brand mt-6 w-full text-white" data-confirm-exam>Start eksamen →</button>
+    </div>
+  </dialog>
+
+  <!-- ===================== Flashcard dialog (swipe) ===================== -->
+  <dialog id="flash" class="card m-auto w-[min(520px,94vw)] p-0 backdrop:bg-ink/60">
+    <div class="flex items-center gap-3 border-b-2 border-ink px-5 py-4">
+      <span class="pill">Kort</span>
+      <h3 id="flash-title" class="font-display text-lg font-700"></h3>
+      <button class="btn btn-white ml-auto !p-2 !shadow-brutal-sm" data-close-flash aria-label="Lukk">✕</button>
+    </div>
+    <div class="h-1.5 bg-[#e6e2d6]"><span id="flash-bar" class="barfill block h-full w-0 bg-ink"></span></div>
+
+    <div class="p-5">
+      <p class="mb-3 text-center text-xs font-bold text-ink/60" id="flash-progress"></p>
+      <div class="swipe-wrap" id="swipe-area">
+        <div class="swipe-card flashcard" id="flashcard">
+          <div class="flashcard-inner border-2 border-ink shadow-brutal">
+            <div class="fc-face fc-front bg-white">
+              <small class="text-[11px] font-bold uppercase tracking-widest text-ink/40">Spørsmål</small>
+              <p id="fc-front-text" class="font-display text-xl font-600"></p>
+            </div>
+            <div class="fc-face fc-back bg-brand text-white">
+              <small class="text-[11px] font-bold uppercase tracking-widest text-white/60">Svar</small>
+              <p id="fc-back-text" class="text-lg font-500"></p>
+            </div>
+          </div>
+          <span class="swipe-badge badge-yes" id="badge-yes">KAN ✓</span>
+          <span class="swipe-badge badge-no" id="badge-no">IGJEN ✗</span>
+        </div>
+      </div>
+      <p class="mt-4 text-center text-xs text-ink/50" id="fc-hint">Trykk for å snu · swipe → kan · ← øv mer</p>
+      <div class="mt-4 grid grid-cols-3 gap-3">
+        <button class="btn btn-white !py-2.5 text-bad" data-swipe="no">Igjen</button>
+        <button class="btn btn-white !py-2.5" data-flip>Snu</button>
+        <button class="btn btn-white !py-2.5 text-ok" data-swipe="yes">Kan</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Vanlige script-tagger (ikke moduler) i avhengighetsrekkefølge —
+       fungerer rett fra file:// uten server. -->
+  <script src="data/nye_sporsmal.js"></script>
+  <script src="data/questions.js"></script>
+  <script src="data/modules.js"></script>
+  <script src="data/forklaringer.js"></script>
+  <script src="data/nye_flashcards.js"></script>
+  <script src="data/laerebok.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
